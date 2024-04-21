@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: "Quicksand", sans-serif;
+  
+}
+
+.custom-card {
+    width: 20rem; 
+    
+ }
+  
+  .custom-card-img {
+    height: 15rem; 
+    object-fit: cover; 
+  }
+
+  #btn {
+ padding: 10px 20px;
+  border: none;
+  border-radius: 15px; 
+ }
+
+ .Toolbar {
+   display: flex;
+   justify-content: space-between;
+   line-height: 0;
+ }
+
+
+.loading-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.icons {
+  cursor: pointer;
+}
+
+/* ITEMS PAGE */
+.btn-addItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* MODAL FORM */
+.input-field{
+  width: 100%;
+}
+
+.category{
+ cursor: pointer;
+}
+
+.img-category {
+  height: 50px;
+  width: 60px;
+  border-radius: 50px;
+  transition: transform 0.3s ease; 
+}
+
+.img-category:hover {
+  transform: scale(1.1); 
+}
+
+
+/*---------------- Register User */
+.register-form{
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: rgba(255, 255, 255, 0.3) 0px 15px 30px 5px, rgba(255, 255, 255, 0.2) 0px 10px 10px 5px;
+}
+
+.register-form h1  {
+  text-align: center;
+  color: white;
+}
+
+.register{
+  background-image: url("https://images.pexels.com/photos/12935074/pexels-photo-12935074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  background-attachment: fixed;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+}
+
+.input-field{
+  width: 400px !important;
+}
+
+.btn-register {
+  width: 100px;
+  color: white;
+  }
+
+
+
+
+/*----------------- Login Page---------------------- */
+
+.login-form{
+  background-color: transparent;
+  box-shadow: rgba(255, 255, 255, 0.3) 0px 15px 30px 5px, rgba(255, 255, 255, 0.2) 0px 10px 10px 5px;
+  border-radius: 15px;
+  padding: 20px;
+  height: auto; 
+  width: 90%; 
+  max-width: 400px; 
+  color: white;
+}
+
+.login {
+  background-image: url("https://images.pexels.com/photos/12935074/pexels-photo-12935074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  margin-left: 40%;
+}
+
+ .btn-login{
+  width: 100%;
+  
+ }
+
+ .link{
+  color: white;
+ }
+
+ .eye {
+  color: aqua !important;
+  
+ }
+
+ /* .container-fluid {
+  max-width: 100%;
+  overflow: hidden;
+ 
+} */
+
+/* -----------FORGOT PASSWORD--------------- */
+
+.Form-resetPass{
+  background-color: transparent;
+  box-shadow: rgba(255, 255, 255, 0.3) 0px 15px 30px 5px, rgba(255, 255, 255, 0.2) 0px 10px 10px 5px;
+  border-radius: 15px;
+  padding: 20px;
+  height: auto; 
+  width: 90%; 
+  max-width: 400px; 
+  color: white;
+}
+
+.Forgot-Password{
+  background-image: url("https://images.pexels.com/photos/12935074/pexels-photo-12935074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+}
+
+.Form-resetPass h2  {
+  text-align: center;
+  color: white;
+}
+
+/* Reset Password Form */
+
+.Reset-Password {
+  background-image: url("https://images.pexels.com/photos/12935074/pexels-photo-12935074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+}
+
+.Form-resetPass{
+  background-color: transparent;
+  box-shadow: rgba(255, 255, 255, 0.3) 0px 15px 30px 5px, rgba(255, 255, 255, 0.2) 0px 10px 10px 5px;
+  border-radius: 15px;
+  padding: 20px;
+  height: auto; 
+  width: 90%; 
+  max-width: 400px; 
+  color: white;
+}
+
+/* ---------User Manage---------------- */
+.btn-addUser {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*=====================Shift Border=============== */
+.shift-border {
+  border-radius: 10px;
+  border: 1px solid rgb(0, 0, 0);
+  padding: 30px;
+  margin-right: 50px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(179, 180, 184);
+}
+
+
+/* ========WEEKLY SALES =================== */
+.date-picker{
+  margin-bottom: 5px;
+}
+
+
+/* =========Card Dashboard====== */
+
+.Card-Sales1{
+  background-color: #FE9895;
+ 
+}
+
+.Card-Sales2{
+  background-color: #45A1EB;
+}
+
+.Card-Sales3{
+  background-color: #48D3C1;
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+  .login-form {
+    width: 95%; 
+  }
+
+  .register-form{
+    width: 95%; 
+  }
+
+  .Form-resetPass{
+    width: 95%; 
+  }
+
+  .custom-card {
+    max-width: 90%; 
+  }
+
+  .category {
+    width: 100%; /* Ensure categories take full width on smaller screens */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .login-form {
+    width: 100%; 
+    padding: 15px;
+  }
+
+  .register-form{
+    width: 100%; 
+    padding: 15px;
+  }
+
+  .Form-resetPass{
+    width: 100%; 
+    padding: 15px;
+  }
+  
+  .custom-card {
+    max-width: 90%; 
+    margin: 0 auto; 
+  }
+
+  .custom-card-img {
+    height: auto; 
+    max-height: 10rem; 
+  }
+
+  #btn {
+    font-size: 14px; 
+    padding: 8px 16px; 
+    border-radius: 10px; 
+  }
+
+}
