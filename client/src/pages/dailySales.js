@@ -24,7 +24,7 @@ function DailySales() {
         const timestamp = selectedDate.getTime();
         // console.log("Timestamp sent to backend:", timestamp);
         const response = await axios.get(
-          "https://pos-3j4q.onrender.com/bills/daily-sales",
+          "https://pos-cbfa.onrender.com/bills/daily-sales",
           {
             params: {
               createdAt: timestamp,

@@ -16,7 +16,7 @@ export default function ResetPassword() {
 
     try {
       const response = await axios.post(
-        `https://pos-3j4q.onrender.com/users/reset`,
+        `https://pos-cbfa.onrender.com/users/reset`,
         {
           token,
           newPassword,

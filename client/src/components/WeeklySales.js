@@ -15,7 +15,7 @@ function WeeklySales() {
         const startOfWeekTimestamp = firstDayOfWeek.toISOString();
 
         const response = await axios.post(
-          "https://pos-3j4q.onrender.com/weekly",
+          "https://pos-cbfa.onrender.com/weekly",
           {
             startDate: startOfWeekTimestamp,
             endDate: currentDate.toISOString(),

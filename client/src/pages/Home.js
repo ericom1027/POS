@@ -38,7 +38,7 @@ export default function Home() {
           type: "SHOW_LOADING",
         });
         const { data } = await axios.get(
-          "http://localhost:5000/items/get-item"
+          "https://pos-cbfa.onrender.com/items/get-item"
         );
 
         if (data && Array.isArray(data.items)) {

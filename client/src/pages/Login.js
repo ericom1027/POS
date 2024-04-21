@@ -22,7 +22,7 @@ export default function Login() {
     e.preventDefault();
 
     axios
-      .post(`https://pos-3j4q.onrender.com/users/login`, {
+      .post(`https://pos-cbfa.onrender.com/users/login`, {
         email: email,
         password: password,
       })
@@ -47,7 +47,7 @@ export default function Login() {
 
   const retrieveUserDetails = (token) => {
     axios
-      .get(`https://pos-3j4q.onrender.com/users/details`, {
+      .get(`https://pos-cbfa.onrender.com/users/details`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

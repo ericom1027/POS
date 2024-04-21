@@ -21,7 +21,7 @@ const ShiftPage = () => {
     const token = localStorage.getItem("token");
     if (token && !user) {
       axios
-        .get(`https://pos-3j4q.onrender.com/shifts/getShift`, {
+        .get(`https://pos-cbfa.onrender.com/shifts/getShift`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => console.log(response.data))
@@ -38,7 +38,7 @@ const ShiftPage = () => {
       }
 
       await axios.post(
-        "https://pos-3j4q.onrender.com/shifts/openShift",
+        "https://pos-cbfa.onrender.com/shifts/openShift",
         { firstName: user.firstName, startingCash: newShift.startingCash },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -58,7 +58,7 @@ const ShiftPage = () => {
       }
 
       await axios.put(
-        "https://pos-3j4q.onrender.com/shifts/closeShift",
+        "https://pos-cbfa.onrender.com/shifts/closeShift",
         { firstName: user.firstName, endingCash: closingShift.endingCash },
         { headers: { Authorization: `Bearer ${token}` } }
       );

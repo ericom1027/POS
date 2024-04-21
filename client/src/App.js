@@ -44,7 +44,7 @@ export default function App() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            "https://pos-3j4q.onrender.com/users/details",
+            "https://pos-cbfa.onrender.com/users/details",
             {
               headers: {
                 Authorization: `Bearer ${token}`,

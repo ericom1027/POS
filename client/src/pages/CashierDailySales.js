@@ -21,7 +21,7 @@ const DailySalesTable = () => {
     const fetchDailySales = async () => {
       try {
         const response = await axios.get(
-          "https://pos-3j4q.onrender.com/shifts/getCashierTotalSales"
+          "https://pos-cbfa.onrender.com/shifts/getCashierTotalSales"
         );
         setDailySales(response.data);
       } catch (error) {

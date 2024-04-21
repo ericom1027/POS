@@ -117,7 +117,7 @@ export default function CartPage() {
       };
 
       await axios.post(
-        "https://pos-3j4q.onrender.com/bills/add-bills",
+        "https://pos-cbfa.onrender.com/bills/add-bills",
         newBill
       );
       toast.success("Bill generated successfully");

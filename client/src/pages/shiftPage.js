@@ -41,7 +41,7 @@ const ShiftPage = () => {
     try {
       const formattedDate = formatDate(selectedDate);
       const response = await axios.post(
-        "https://pos-3j4q.onrender.com/shifts/allShift",
+        "https://pos-cbfa.onrender.com/shifts/allShift",
         { selectedDate: formattedDate }
       );
       if (response.status === 200) {
@@ -62,7 +62,7 @@ const ShiftPage = () => {
     const token = localStorage.getItem("token");
     if (token && !user) {
       axios
-        .get(`https://pos-3j4q.onrender.com/shifts/getShift`, {
+        .get(`https://pos-cbfa.onrender.com/shifts/getShift`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {

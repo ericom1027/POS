@@ -146,7 +146,7 @@ export default function BillsPage() {
       try {
         dispatch({ type: "SHOW_LOADING" });
         const response = await axios.get(
-          `https://pos-3j4q.onrender.com/get-bills`
+          `https://pos-cbfa.onrender.com/get-bills`
         );
         if (response.data && Array.isArray(response.data.bills)) {
           const sortedBills = response.data.bills.sort(
@@ -182,7 +182,7 @@ export default function BillsPage() {
 
     try {
       const response = await axios.post(
-        "https://pos-3j4q.onrender.com/void",
+        "https://pos-cbfa.onrender.com/void",
         { invoiceNumber },
         {
           headers: {
