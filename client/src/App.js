@@ -108,6 +108,7 @@ export default function App() {
               <Route path="/userShift" element={<UserShiftPage />} />
               <Route path="/users" element={<UsersPage />} />
               <Route path="/logout" element={<Logout />} />
+              <Route path="*" element={<Error />} />
             </>
           )}
 
@@ -115,7 +116,6 @@ export default function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset/:token" element={<ResetPassword />} />
           <Route path="/login" element={<Login />} />
-          <Route path="*" element={<Error />} />
         </Routes>
       </Router>
     </UserProvider>

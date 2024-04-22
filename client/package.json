@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy" : "https://pos-1-8vgs.onrender.com", 
+   "proxy" : "https://pos-1-8vgs.onrender.com", 
   
   "dependencies": {
     "@emotion/react": "^11.11.4",
