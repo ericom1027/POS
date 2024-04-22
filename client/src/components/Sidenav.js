@@ -39,7 +39,6 @@ import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import AccessTimeOutlined from "@mui/icons-material/AccessTimeOutlined";
 import { Col, Row, Container } from "react-bootstrap";
-import { applyMiddleware } from "redux";
 
 const drawerWidth = 240;
 
