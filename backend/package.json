@@ -2,6 +2,7 @@
   "name": "pos-project",
   "version": "1.0.0",
   "description": "pos app",
+  "proxy" : "https://pos-1-8vgs.onrender.com", 
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
