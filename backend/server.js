@@ -15,9 +15,7 @@ dotEnv.config();
 
 const app = express();
 
-//middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Middlewares
 app.use(
   cors({
     origin: "https://pos-1-8vgs.onrender.com", // Replace with your React app's domain
@@ -25,14 +23,11 @@ app.use(
     allowedHeaders: "Content-Type,Authorization",
   })
 );
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from the "client/build" directory
-app.use(express.static(path.join(__dirname, "client", "build")));
-
-// Routes
-app.get("/", (req, res) => {
-  res.send("<h1>POS BACKEND</h1>");
-});
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, "public")));
 
 // Define API routes
 app.use("/items", itemRoutes);
@@ -42,7 +37,7 @@ app.use("/shifts", shiftRoutes);
 
 // Catch-all route to serve the React app
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Connect to the database
