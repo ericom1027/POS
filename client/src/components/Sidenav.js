@@ -14,7 +14,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import HomeIcon from "@mui/icons-material/Home";
+import PointOfSaleOutlinedIcon from "@mui/icons-material/PointOfSaleOutlined";
 import ListIcon from "@mui/icons-material/List";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 import AssessmentOutlinedIcon from "@mui/icons-material/AssessmentOutlined";
@@ -179,8 +179,8 @@ export default function Sidenav() {
               route: "/dashboard",
             },
             (user.id === null || !user.isAdmin) && {
-              text: "Home",
-              icon: <HomeIcon />,
+              text: "Sales",
+              icon: <PointOfSaleOutlinedIcon />,
               route: "/",
             },
             { text: "Bills", icon: <FileCopyOutlinedIcon />, route: "/bills" },
