@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotEnv = require("dotenv");
-require("colors");
+const colors = require("colors");
 const itemRoutes = require("./routes/items");
 const userRoutes = require("./routes/user");
 const billsRoutes = require("./routes/bills");
@@ -20,32 +20,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+// Serve static files from the "client/build" directory
+app.use(express.static(path.join(__dirname, "client", "build")));
+
 // Routes
 app.get("/", (req, res) => {
   res.send("<h1>POS BACKEND</h1>");
 });
 
-connectDb();
-
+// Define API routes
 app.use("/items", itemRoutes);
 app.use("/users", userRoutes);
 app.use("/bills", billsRoutes);
 app.use("/shifts", shiftRoutes);
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+// Catch-all route to serve the React app
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
+// Connect to the database
+connectDb();
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
-app.listen(process.env.PORT || port, () => {
-  console.log(
-    `Server Running On Port ${process.env.PORT || port}`.bgGreen.white
-  );
+app.listen(port, () => {
+  console.log(`Server Running On Port ${port}`.bgGreen.white);
 });
 
 module.exports = { app, mongoose };
