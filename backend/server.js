@@ -18,7 +18,7 @@ const app = express();
 // Middlewares
 app.use(
   cors({
-    origin: "https://pos-1-8vgs.onrender.com", // Replace with your React app's domain
+    origin: "https://pos-1-8vgs.onrender.com",
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: "Content-Type,Authorization",
   })

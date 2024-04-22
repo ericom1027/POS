@@ -22,7 +22,8 @@ import ForgotPassword from "./pages/forgotPassword";
 import ResetPassword from "./pages/resetPassword";
 import ShiftPage from "./pages/shiftPage";
 import Dashboard from "./pages/dashboard";
-import Error from "./pages/Error";
+import ErrorPage from "./pages/Error";
+
 import EmpSales from "./pages/CashierDailySales";
 import UserShiftPage from "./pages/userShift";
 
@@ -108,7 +109,7 @@ export default function App() {
               <Route path="/userShift" element={<UserShiftPage />} />
               <Route path="/users" element={<UsersPage />} />
               <Route path="/logout" element={<Logout />} />
-              <Route path="*" element={<Error />} />
+              <Route path="*" element={<ErrorPage />} />
             </>
           )}
 
