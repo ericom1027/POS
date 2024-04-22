@@ -8,6 +8,7 @@ const userRoutes = require("./routes/user");
 const billsRoutes = require("./routes/bills");
 const shiftRoutes = require("./routes/shift");
 const connectDb = require("./config/config");
+const path = require("path");
 
 // dotenv config
 dotEnv.config();
