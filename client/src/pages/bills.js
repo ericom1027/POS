@@ -33,7 +33,7 @@ function BillModal({ bill, show, onHide, onVoid }) {
         {bill && (
           <div className="mt-2" ref={componentRef}>
             <div className="text-center mb-2">
-              <h3>Store Name</h3>
+              <h3>Kanto Siete Pares Mami</h3>
               <p>Contact No. 12345678901 | Address: Manila, Philippines</p>
               <p>VAT Reg TIN: 240-000-000-000-00000</p>
               <h6 className="text-center">SALES INVOICE</h6>
