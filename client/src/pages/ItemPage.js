@@ -76,7 +76,7 @@ const ItemPage = () => {
       dispatch({ type: "SHOW_LOADING" });
       if (editingItemId) {
         await axios.put(
-          `https://pos-cbfa.onrender.com/${editingItemId}/edit`,
+          `https://pos-cbfa.onrender.com/items/${editingItemId}/edit`,
           formData
         );
         toast.success("Item Updated Successfully");
