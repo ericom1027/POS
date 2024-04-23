@@ -14,6 +14,7 @@ import PaginationItem from "@mui/material/PaginationItem";
 import Stack from "@mui/material/Stack";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import PrintIcon from "@mui/icons-material/Print";
 
 function BillModal({ bill, show, onHide, onVoid }) {
   const componentRef = React.useRef();
@@ -266,7 +267,7 @@ export default function BillsPage() {
                     <td>{bill.voided ? "voided" : ""}</td>
                     <td>
                       <div className="icons">
-                        <RemoveRedEyeOutlinedIcon
+                        <PrintIcon
                           style={{ cursor: "pointer" }}
                           onClick={() => {
                             setSelectBill(bill);
