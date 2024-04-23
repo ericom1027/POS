@@ -102,6 +102,12 @@ export default function Sidenav() {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  useEffect(() => {
+    if (user.id) {
+      setOpen(false);
+    }
+  }, [user.id]);
+
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
