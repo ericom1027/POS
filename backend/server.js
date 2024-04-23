@@ -38,7 +38,7 @@ app.use("/shifts", shiftRoutes);
 
 // Catch-all route to serve the React app
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 // Connect to the database
