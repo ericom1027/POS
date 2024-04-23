@@ -27,7 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 // Define API routes
 app.use("/items", itemRoutes);
@@ -37,7 +37,7 @@ app.use("/shifts", shiftRoutes);
 
 // Catch-all route to serve the React app
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 // Connect to the database
