@@ -18,7 +18,7 @@ const app = express();
 // Middlewares
 app.use(
   cors({
-    origin: ["https://pos-1-8vgs.onrender.com", "http://localhost:3000"],
+    origin: process.env.CLIENT_URL.split(","),
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: "Content-Type,Authorization",
   })
