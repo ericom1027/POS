@@ -138,25 +138,27 @@ export default function Sidenav() {
                 <>
                   <Container>
                     <Row className="align-items-center">
-                      <Col md={3}>
+                      <Col xs={3} className="d-flex justify-content-start">
                         <Avatar alt={`${user.firstName} ${user.lastName}`}>
                           {user.firstName.charAt(0)}
                         </Avatar>
                       </Col>
-                      <Col md={6}>
-                        {user.firstName} {user.lastName}
-                      </Col>
-                    </Row>
-                    <Row className="align-items-center">
-                      <Col md={{ offset: 2, size: 4 }}>
-                        <FiberManualRecordIcon
-                          sx={{
-                            color: "green",
-                            fontSize: "small",
-                            marginRight: 1,
-                          }}
-                        />
-                        <span>Online</span>
+                      <Col xs={9} className="d-flex align-items-center">
+                        <div>
+                          {user.firstName} {user.lastName}
+                          <Row>
+                            <Col xs={12}>
+                              <FiberManualRecordIcon
+                                sx={{
+                                  color: "green",
+                                  fontSize: "small",
+                                  marginRight: 1,
+                                }}
+                              />
+                              <span>Online</span>
+                            </Col>
+                          </Row>
+                        </div>
                       </Col>
                     </Row>
                   </Container>
