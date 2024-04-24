@@ -30,7 +30,7 @@ router.post("/monthly", getMonthlySalesTotal);
 
 router.post("/weekly", getWeeklySalesTotal);
 
-router.get("/day-sales", getDailySalesTotal);
+router.post("/day-sales", getDailySalesTotal);
 
 router.post("/void", verify, verifyAdmin, voidInvoiceController);
 
