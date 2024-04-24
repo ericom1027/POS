@@ -7,20 +7,30 @@ function DailySales() {
   useEffect(() => {
     const fetchDailySales = async () => {
       try {
-        const selectedDate = new Date();
-        const timestamp = selectedDate.getTime();
+        // Get the current date and format it as "YYYY-MM-DD"
+        const currentDate = new Date().toISOString().split("T")[0];
+
+        // Make a GET request to fetch the daily sales
         const response = await axios.get(
           "https://pos-cbfa.onrender./bills/day-sales",
           {
             params: {
-              createdAt: timestamp,
+              startOfDay: currentDate,
+              endOfDay: currentDate,
             },
           }
         );
-        const dailySales = response.data;
-        const total = dailySales
-          .filter((sale) => !sale.voided)
-          .reduce((acc, sale) => acc + sale.totalAmount, 0);
+
+        // Extract daily sales data from the response
+        const dailySales = response.data.dailySales;
+
+        // Calculate total sales from the daily sales data
+        let total = 0;
+        for (const date in dailySales) {
+          total += dailySales[date];
+        }
+
+        // Update state with the total sales
         setTotalSales(total);
       } catch (error) {
         console.error("Error fetching daily sales:", error);
