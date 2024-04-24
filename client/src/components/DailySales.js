@@ -10,7 +10,7 @@ function DailySales() {
         const selectedDate = new Date();
         const timestamp = selectedDate.getTime();
         const response = await axios.get(
-          "https://pos-cbfa.onrender./bills/daily-sales",
+          "https://pos-cbfa.onrender./bills/day-sales",
           {
             params: {
               createdAt: timestamp,

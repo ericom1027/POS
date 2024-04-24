@@ -285,3 +285,37 @@ module.exports.getWeeklySalesTotal = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// ===============Daily Get Grand Total Display in Dashboard============
+module.exports.getDailySalesTotal = async (req, res) => {
+  try {
+    const { startDate, endDate } = req.body;
+
+    // Convert ISO strings back to Date objects
+    const startOfWeek = new Date(startDate);
+    const endOfWeek = new Date(endDate);
+
+    // Proceed with querying the database using valid timestamps
+    const daySales = await Bills.find({
+      createdAt: {
+        $gte: startOfWeek.toISOString(),
+        $lte: endOfWeek.toISOString(),
+      },
+    });
+
+    // Group sales by day
+    const dailySales = {};
+    daySales.forEach((sale) => {
+      const date = new Date(sale.createdAt).toISOString().split("T")[0];
+      if (dailySales[date]) {
+        dailySales[date] += sale.totalAmount;
+      } else {
+        dailySales[date] = sale.totalAmount;
+      }
+    });
+
+    res.json({ dailySales });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

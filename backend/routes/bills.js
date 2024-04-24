@@ -29,6 +29,8 @@ router.post("/monthly", getMonthlySalesTotal);
 
 router.post("/weekly", getWeeklySalesTotal);
 
+router.get("/day-sales", getDailySales);
+
 router.post("/void", verify, verifyAdmin, voidInvoiceController);
 
 module.exports = router;
