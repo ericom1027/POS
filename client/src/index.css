@@ -152,6 +152,8 @@ body{
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
 }
 
+
+
 .logo {
   width: 100px;
   height: 100px;
@@ -247,16 +249,28 @@ body{
 }
 
 /*=====================Shift Border=============== */
-.shift-border {
-  border-radius: 10px;
-  border: 1px solid rgb(0, 0, 0);
-  padding: 30px;
-  margin-right: 50px;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(179, 180, 184);
-}
+.Shift-Form{
+  background-image: url("https://images.pexels.com/photos/12935074/pexels-photo-12935074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+ }
 
+.shift-border {
+  background-color: transparent;
+  box-shadow: rgba(255, 255, 255, 0.3) 0px 15px 30px 5px, rgba(255, 255, 255, 0.2) 0px 10px 10px 5px;
+  border-radius: 15px;
+  padding: 80px;
+  height: auto; 
+  width: 50%; 
+  max-width: 400px; 
+  color: white;
+  }
 
 /* ========WEEKLY SALES =================== */
 .date-picker{

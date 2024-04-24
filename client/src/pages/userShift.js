@@ -1,16 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { Button, Form } from "react-bootstrap";
-import Box from "@mui/material/Box";
-import Sidenav from "../components/Sidenav";
+
 import UserContext from "../UserContext";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ShiftPage = () => {
   const [newShift, setNewShift] = useState({ firstName: "", startingCash: "" });
   const [closingShift, setClosingShift] = useState({ endingCash: "" });
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const toastOptions = {
     autoClose: 900,
@@ -44,6 +44,8 @@ const ShiftPage = () => {
       );
       toast.success("Shift opened successfully!", toastOptions);
       setNewShift({ firstName: "", startingCash: "" });
+      // Redirect to home page after opening shift
+      navigate("/home");
     } catch (error) {
       toast.error("Error opening shift:", error, toastOptions);
     }
@@ -64,65 +66,85 @@ const ShiftPage = () => {
       );
       toast.success("Shift closed successfully!", toastOptions);
       setClosingShift({ endingCash: "" });
+      // Redirect to home page after closing shift
+      navigate("/logout");
     } catch (error) {
-      toast.error("Error closing shift:", error, toastOptions);
+      toast.error(
+        "You need to open a shift before closing it:",
+        error,
+        toastOptions
+      );
     }
   };
 
-  return (
-    <Box sx={{ display: "flex" }}>
-      <Sidenav />
-      <div className="d-flex mx-auto mt-5 py-5">
-        <div className="shift-border">
-          <h4>Open Shift</h4>
-          <Form>
-            <Form.Group className="mb-4">
-              <Form.Label>Starting Cash</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Starting Cash"
-                value={newShift.startingCash}
-                onChange={(e) =>
-                  setNewShift({ ...newShift, startingCash: e.target.value })
-                }
-              />
-            </Form.Group>
-            <Link to="/home">
-              <Button variant="primary" onClick={handleOpenShift}>
-                Open Shift
-              </Button>
-            </Link>
-          </Form>
-        </div>
+  const handleNavigateToLogin = () => {
+    navigate("/logout");
+  };
 
-        <div className="shift-border">
-          <div>
-            <h4>Close Shift</h4>
-            <Form>
-              <Form.Group className="mb-4">
-                <Form.Label>Ending Cash</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Ending Cash"
-                  value={closingShift.endingCash}
-                  onChange={(e) =>
-                    setClosingShift({
-                      ...closingShift,
-                      endingCash: e.target.value,
-                    })
-                  }
-                />
-              </Form.Group>
-              <Link to="/home">
-                <Button variant="primary" onClick={handleCloseShift}>
-                  Close Shift
-                </Button>
-              </Link>
-            </Form>
-          </div>
-        </div>
+  // Determine if shift is open or closed
+  const isShiftOpen = !!(newShift.startingCash && !closingShift.endingCash);
+  return (
+    <div className="Shift-Form">
+      <div className="shift-border">
+        <Form className="mt-4 text-center">
+          <h4>Open Shift</h4>
+          <Form.Group className="mb-2">
+            <Form.Label>Starting Cash</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Starting Cash"
+              value={newShift.startingCash}
+              onChange={(e) =>
+                setNewShift({ ...newShift, startingCash: e.target.value })
+              }
+            />
+          </Form.Group>
+          {isShiftOpen ? (
+            // Render button to open shift
+            <Button variant="primary" onClick={handleOpenShift}>
+              Open Shift
+            </Button>
+          ) : (
+            // Render disabled button if shift is already open
+            <Button variant="primary" disabled>
+              Shift Opened
+            </Button>
+          )}
+        </Form>
+
+        <Form className="mt-4 text-center">
+          <h4>Close Shift</h4>
+          <Form.Group className="mb-2">
+            <Form.Label>Ending Cash</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Ending Cash"
+              value={closingShift.endingCash}
+              onChange={(e) =>
+                setClosingShift({
+                  ...closingShift,
+                  endingCash: e.target.value,
+                })
+              }
+            />
+          </Form.Group>
+          {isShiftOpen ? (
+            // Render disabled button if shift is not open
+            <Button variant="primary" disabled>
+              Shift Not Opened
+            </Button>
+          ) : (
+            // Render button to close shift
+            <Button variant="primary" onClick={handleCloseShift}>
+              Close Shift
+            </Button>
+          )}
+        </Form>
+        <p className="text-center">
+          Go back to <span onClick={handleNavigateToLogin}>Login page</span>
+        </p>
       </div>
-    </Box>
+    </div>
   );
 };
 

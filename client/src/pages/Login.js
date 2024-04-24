@@ -81,7 +81,7 @@ export default function Login() {
     user.isAdmin ? (
       <Navigate to="/dashboard" />
     ) : (
-      <Navigate to="/" />
+      <Navigate to="/userShift" />
     )
   ) : (
     <div className="login">
