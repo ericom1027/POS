@@ -8,6 +8,7 @@ const {
   getMonthlySales,
   getMonthlySalesTotal,
   getWeeklySalesTotal,
+  getDailySalesTotal,
 } = require("../controllers/bills");
 
 const { verify, verifyAdmin } = require("../middlewares/auth");
@@ -29,7 +30,7 @@ router.post("/monthly", getMonthlySalesTotal);
 
 router.post("/weekly", getWeeklySalesTotal);
 
-router.get("/day-sales", getDailySales);
+router.get("/day-sales", getDailySalesTotal);
 
 router.post("/void", verify, verifyAdmin, voidInvoiceController);
 

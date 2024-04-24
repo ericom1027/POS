@@ -289,24 +289,30 @@ module.exports.getWeeklySalesTotal = async (req, res) => {
 // ===============Daily Get Grand Total Display in Dashboard============
 module.exports.getDailySalesTotal = async (req, res) => {
   try {
-    const { startDate, endDate } = req.body;
+    const { startOfDay, endOfDay } = req.body;
 
-    // Convert ISO strings back to Date objects
-    const startOfWeek = new Date(startDate);
-    const endOfWeek = new Date(endDate);
+    // Set start and end of day timestamps
+    const dayStart = new Date(startOfDay);
+    const dayEnd = new Date(endOfDay);
+    dayEnd.setHours(23, 59, 59, 999);
 
-    // Proceed with querying the database using valid timestamps
     const daySales = await Bills.find({
       createdAt: {
-        $gte: startOfWeek.toISOString(),
-        $lte: endOfWeek.toISOString(),
+        $gte: dayStart,
+        $lte: dayEnd,
       },
     });
 
-    // Group sales by day
+    // Initialize an object to store daily sales totals
     const dailySales = {};
+
+    // Calculate daily sales totals
     daySales.forEach((sale) => {
-      const date = new Date(sale.createdAt).toISOString().split("T")[0];
+      // Get the date without converting it to ISO format
+      const date = new Date(sale.createdAt);
+      date.setHours(0, 0, 0, 0); // Set time to midnight to consider the entire day
+
+      // Accumulate the totalAmount for each day
       if (dailySales[date]) {
         dailySales[date] += sale.totalAmount;
       } else {
@@ -314,8 +320,12 @@ module.exports.getDailySalesTotal = async (req, res) => {
       }
     });
 
+    // Send response with daily sales totals
     res.json({ dailySales });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while processing your request." });
   }
 };
