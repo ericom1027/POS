@@ -312,7 +312,7 @@ body{
   }
 
   .custom-card-img {
-    height: 15rem; /* Adjust height for medium screens */
+    height: 15rem; 
     object-fit: cover;
 }
 

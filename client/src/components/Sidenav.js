@@ -39,7 +39,7 @@ import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import AccessTimeOutlined from "@mui/icons-material/AccessTimeOutlined";
 import { Col, Row, Container } from "react-bootstrap";
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
