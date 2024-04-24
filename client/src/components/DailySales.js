@@ -9,9 +9,9 @@ function DailySales() {
       try {
         // Get the start and end of the current day
         const startOfDay = new Date();
-        startOfDay.setHours(0, 0, 0, 0); // Set time to the beginning of the day
+        startOfDay.setHours(0, 0, 0, 0);
         const endOfDay = new Date();
-        endOfDay.setHours(23, 59, 59, 999); // Set time to the end of the day
+        endOfDay.setHours(23, 59, 59, 999);
 
         // Make a POST request to fetch the daily sales
         const response = await axios.post(

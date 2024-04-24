@@ -20,11 +20,11 @@ body{
     object-fit: cover; 
   }
 
-  #btn {
+ /* #btn {
  padding: 10px 20px;
   border: none;
   border-radius: 15px; 
- }
+ } */
 
  .Toolbar {
    display: flex;
@@ -60,11 +60,20 @@ body{
  cursor: pointer;
 }
 
-.img-category {
+/* .img-category {
   height: 50px;
   width: 60px;
   border-radius: 50px;
   transition: transform 0.3s ease; 
+} */
+
+.img-category {
+  height: 45px;
+  width: 55px;
+  border-radius: 50px;
+  transition: transform 0.3s ease;
+  display: inline-block; 
+  margin-right: 10px; 
 }
 
 .img-category:hover {
@@ -72,7 +81,9 @@ body{
 }
 
 
-/*---------------- Register User */
+
+
+/*---------------- Register User------------- */
 .register-form{
   background-color: transparent;
   padding: 20px;
@@ -292,10 +303,19 @@ body{
     width: 100%; 
   }
 
+  .img-category {
+    display: inline-block; /* Ensure horizontal layout */
+  }
+
+  .custom-card-img {
+    height: 15rem; /* Adjust height for medium screens */
+    object-fit: cover;
+}
+
   .shift-border {
-    margin-right: 10px; /* Adjust the margin-right for 768px width */
-    margin-bottom: 10px; /* Adjust the margin-bottom for 768px width */
-    padding: 10px; /* Adjust the padding for 768px width */
+    margin-right: 10px; 
+    margin-bottom: 10px; 
+    padding: 10px; 
   }
 }
 
@@ -325,15 +345,21 @@ body{
     max-height: 10rem; 
   }
 
-  #btn {
+ 
+  .custom-card-img {
+    height: 10rem; 
+}
+
+
+  /* #btn {
     font-size: 14px; 
     padding: 8px 16px; 
     border-radius: 10px; 
-  }
+  } */
 
   .shift-border {
-    margin-right: 5px; /* Adjusted margin-right for 480px width */
-    padding: 5px; /* Adjusted padding for 480px width */
+    margin-right: 5px; 
+    padding: 5px; 
   }
 
 }

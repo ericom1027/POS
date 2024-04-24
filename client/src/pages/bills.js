@@ -214,8 +214,8 @@ export default function BillsPage() {
             <thead className="text-center">
               <tr>
                 <th>Invoice No.</th>
-                <th>Customer Name</th>
-                <th>Customer Number</th>
+                {/* <th>Customer Name</th>
+                <th>Customer Number</th> */}
                 <th>Payment Mode</th>
                 <th>Description</th>
                 <th>Sub Total</th>
@@ -235,8 +235,8 @@ export default function BillsPage() {
                 .map((bill, index) => (
                   <tr key={index}>
                     <td>{bill.invoiceNumber || ""}</td>
-                    <td>{bill.customerName || ""}</td>
-                    <td>{bill.customerNumber || ""}</td>
+                    {bill.customerName && <td>{bill.customerName}</td>}
+                    {bill.customerNumber && <td>{bill.customerNumber}</td>}
                     <td>{bill.paymentMode || ""}</td>
                     <td>
                       {bill.cartItems &&
