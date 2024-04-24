@@ -11,9 +11,9 @@ body{
 }
 
 .custom-card {
-    width: 20rem; 
-    
- }
+    width: auto;
+    text-align: center;
+}
   
   .custom-card-img {
     height: 15rem; 
@@ -294,8 +294,6 @@ body{
 }
 
 
-
-
 @media screen and (max-width: 768px) {
   .login-form {
     width: 95%; 
@@ -309,10 +307,6 @@ body{
     width: 95%; 
   }
 
-  .custom-card {
-    max-width: 90%; 
-  }
-
   .category {
     width: 100%;
     max-width: 50px;
@@ -323,6 +317,11 @@ body{
     display: block; 
     max-width: 100%; 
     height: auto; 
+  }
+  .custom-card {
+    width: 100%;
+    margin: 0 auto; 
+   
   }
 
   .custom-card-img {
@@ -354,7 +353,7 @@ body{
   }
   
   .custom-card {
-    max-width: 90%; 
+    width: 95%; 
     margin: 0 auto; 
   }
 
