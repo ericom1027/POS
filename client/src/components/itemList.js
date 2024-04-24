@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
 import { Card } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -28,7 +28,7 @@ const ItemList = ({ item }) => {
   };
 
   return (
-    <div className="mb-4 py-2  d-flex text-center justify-content-between">
+    <div className="mb-4 py-2 d-flex flex-wrap justify-content-center">
       <Card onClick={() => handleAddToCart()} className="custom-card mt-5">
         <Card.Img className="custom-card-img" variant="top" src={item.image} />
         <Card.Body>

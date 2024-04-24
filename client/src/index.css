@@ -300,11 +300,15 @@ body{
   }
 
   .category {
-    width: 100%; 
+    width: 100%;
+    max-width: 100px; /* Adjust max-width as needed */
+    text-align: center;
   }
 
   .img-category {
-    display: inline-block; /* Ensure horizontal layout */
+    display: block; 
+    max-width: 100%; 
+    height: auto; 
   }
 
   .custom-card-img {
@@ -340,12 +344,15 @@ body{
     margin: 0 auto; 
   }
 
-  .custom-card-img {
+  /* .custom-card-img {
     height: auto; 
     max-height: 10rem; 
+  } */
+
+  .img-category {
+    display: inline-block; /* Ensure horizontal layout */
   }
 
- 
   .custom-card-img {
     height: 10rem; 
 }
