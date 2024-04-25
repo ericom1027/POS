@@ -38,7 +38,7 @@ app.use("/bills", billsRoutes);
 app.use("/shifts", shiftRoutes);
 
 // Catch-all route to serve the React app
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "public", "index.html"));
 });
 

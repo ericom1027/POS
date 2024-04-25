@@ -36,7 +36,6 @@ import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import NextWeekOutlinedIcon from "@mui/icons-material/NextWeekOutlined";
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
-import AccessTimeOutlined from "@mui/icons-material/AccessTimeOutlined";
 import { Col, Row, Container } from "react-bootstrap";
 
 const drawerWidth = 220;
@@ -193,7 +192,7 @@ export default function Sidenav() {
             { text: "Bills", icon: <FileCopyOutlinedIcon />, route: "/bills" },
             (user.id === null || !user.isAdmin) && {
               text: "Shift",
-              icon: <AccessTimeOutlined />,
+              icon: <AccessTimeOutlinedIcon />,
               route: "/userShift",
             },
 

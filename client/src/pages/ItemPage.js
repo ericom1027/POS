@@ -225,14 +225,14 @@ const ItemPage = () => {
                   >
                     <option value="">Select Category</option>
                     <option value="Drinks">Drinks</option>
-                    <option value="Sandwich">Sandwiches</option>
                     <option value="Rice">Rice</option>
+                    <option value="Pares">Pares</option>
                     <option value="Noodles">Noodles</option>
                   </Form.Select>
                 </Form.Group>
                 {formData.category !== "Rice" &&
-                  formData.category !== "Noodles" &&
-                  formData.category !== "Sandwich" && (
+                  formData.category !== "Pares" &&
+                  formData.category !== "Noodles" && (
                     <Form.Group>
                       <Form.Label>Size</Form.Label>
                       <Form.Select

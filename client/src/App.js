@@ -23,7 +23,6 @@ import ResetPassword from "./pages/resetPassword";
 import ShiftPage from "./pages/shiftPage";
 import Dashboard from "./pages/dashboard";
 import ErrorPage from "./pages/Error";
-
 import EmpSales from "./pages/CashierDailySales";
 import UserShiftPage from "./pages/userShift";
 
@@ -109,11 +108,11 @@ export default function App() {
               <Route path="/userShift" element={<UserShiftPage />} />
               <Route path="/users" element={<UsersPage />} />
               <Route path="/logout" element={<Logout />} />
-              <Route path="*" element={<ErrorPage />} />
             </>
           )}
 
           {/* Public routes */}
+          <Route path="*" element={<ErrorPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset/:token" element={<ResetPassword />} />
           <Route path="/login" element={<Login />} />
