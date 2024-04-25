@@ -28,8 +28,8 @@ const ItemList = ({ item }) => {
   };
 
   return (
-    <div className="mb-4 py-2 d-flex flex-wrap justify-content-center">
-      <Card onClick={() => handleAddToCart()} className="custom-card mt-5">
+    <div className="custom-card-container mt-5">
+      <Card onClick={() => handleAddToCart()} className="custom-card">
         <Card.Img className="custom-card-img" variant="top" src={item.image} />
         <Card.Body>
           {/* <div onClick={() => handleAddToCart()}> */}
