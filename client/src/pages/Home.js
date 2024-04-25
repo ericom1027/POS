@@ -9,23 +9,22 @@ import { useDispatch } from "react-redux";
 
 export default function Home() {
   const [itemsData, setItemsData] = useState([]);
-  const [selectCategory, setSelectCategory] = useState("Drinks");
+  const [selectCategory, setSelectCategory] = useState("All");
   const dispatch = useDispatch();
 
   const categories = [
     {
+      name: "All",
+      imageUrl: "https://cdn-icons-png.flaticon.com/128/9411/9411889.png",
+    },
+    {
       name: "Drinks",
       imageUrl: "https://cdn-icons-png.flaticon.com/128/4329/4329538.png",
     },
-    // {
-    //   name: "Sandwich",
-    //   imageUrl: "https://cdn-icons-png.flaticon.com/128/1625/1625062.png",
-    // },
     {
       name: "Pares",
       imageUrl: "https://cdn-icons-png.flaticon.com/128/3547/3547146.png",
     },
-
     {
       name: "Rice",
       imageUrl: "https://cdn-icons-png.flaticon.com/128/129/129356.png",
@@ -101,7 +100,8 @@ export default function Home() {
                 const selectedCategory = selectCategory.toLowerCase();
 
                 return (
-                  selectedCategory === "" || itemCategory === selectedCategory
+                  selectedCategory === "all" ||
+                  itemCategory === selectedCategory
                 );
               })
               .map((item) => (

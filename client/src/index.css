@@ -11,14 +11,22 @@ body{
 }
 
 .custom-card {
-    width: auto;
-    text-align: center;
+  width: 100%;
+  max-width: 300px; 
+  margin: 0 auto;
+  display: flex; 
+  overflow: hidden;
+  justify-content: center; 
+  border: 1px solid #ccc; 
+  text-align: center;
 }
-  
-  .custom-card-img {
-    height: 15rem; 
-    object-fit: cover; 
-  }
+
+.custom-card-img {
+  width: 100%; 
+  height: auto; 
+  object-fit: contain; 
+}
+
 
  /* #btn {
  padding: 10px 20px;
@@ -319,15 +327,15 @@ body{
     height: auto; 
   }
   .custom-card {
-    width: 100%;
-    margin: 0 auto; 
-   
-  }
+    flex-direction: column; 
+    align-items: center; 
+}
 
   .custom-card-img {
-    height: 15rem; 
-    object-fit: cover;
-}
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+    }
 
   .shift-border {
     margin-right: 10px; 
