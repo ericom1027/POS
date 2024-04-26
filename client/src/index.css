@@ -11,22 +11,17 @@ body{
 }
 
 .custom-card {
-  flex-direction: row;
-  width: 100%;
-  max-width: 300px; 
-  margin: 0 auto;
-  display: flex; 
-  justify-content: center; 
-  border: 1px solid #ccc; 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   text-align: center;
 }
 
 .custom-card-img {
-  margin-top: 10px;
+  margin: 8px;
   height: 80px;
   width: 80px;
-  width: 100%; 
-  object-fit: contain; 
+  object-fit: contain;
 }
 
 
@@ -330,7 +325,6 @@ body{
 }
 
 
-
 @media screen and (max-width: 768px) {
   .login-form {
     width: 95%; 
@@ -356,16 +350,16 @@ body{
     height: auto; 
   }
   .custom-card {
-    flex-direction: row; 
-    justify-content: center;
+   flex-direction: column;
+    align-items: center;
+   
 }
 
-  .custom-card-img {
-    margin-top: 8px;
-    height: 80px;
-    width: 80px;
-    object-fit: contain;
-    }
+.custom-card-img {
+    margin: 8px;
+    width: 50px;
+    height: 50px;
+}
 
   .shift-border {
     margin-right: 10px; 
@@ -373,6 +367,8 @@ body{
     padding: 10px; 
   }
 }
+
+
 
 @media screen and (max-width: 480px) {
   .login-form {
@@ -395,10 +391,7 @@ body{
     align-items: center;
 }
 
-.custom-card-img {
-    margin-right: 0; 
-    margin-top: 8px; 
-}
+
 
   /* .custom-card-img {
     height: auto; 

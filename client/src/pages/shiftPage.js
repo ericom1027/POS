@@ -32,14 +32,14 @@ const ShiftPage = () => {
   });
 
   const formatDate = (date) => {
-    const formattedDate = moment(date).format("MM-DD-YYYY"); // I-convert ang petsa gamit ang moment-timezone
+    const formattedDate = moment(date).format("MM-DD-YYYY");
     return formattedDate;
   };
 
   const fetchShifts = async () => {
     try {
       const formattedDate = formatDate(selectedDate);
-      console.log("Formatted Date:", formattedDate); // I-debug ang formattedDate
+      // console.log("Formatted Date:", formattedDate);
       const response = await axios.post(
         "https://pos-cbfa.onrender.com/shifts/allShift",
         { selectedDate: formattedDate }
