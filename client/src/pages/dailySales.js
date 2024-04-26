@@ -118,7 +118,13 @@ function DailySales() {
                               </div>
                             ))}
                         </td> */}
-                        <td>{new Date(sale.createdAt).toLocaleString()}</td>
+                        <td>
+                          {new Date(sale.createdAt).toLocaleString("en-PH", {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                          })}
+                        </td>
                         <td>{sale.customer}</td>
                         <td>{sale.invoiceNumber}</td>
                         <td>{sale.vatSales}</td>

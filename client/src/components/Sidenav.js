@@ -35,6 +35,7 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import NextWeekOutlinedIcon from "@mui/icons-material/NextWeekOutlined";
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
+import ChecklistIcon from "@mui/icons-material/Checklist";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
 import { Col, Row, Container } from "react-bootstrap";
 
@@ -348,8 +349,8 @@ export default function Sidenav() {
           onClick={() => handleSubButtonClick("/totalSoldItem")}
           className="totalSoldItemMenuItem"
         >
-          <AccessTimeOutlinedIcon />
-          Total Sold Item
+          <ChecklistIcon />
+          Daily Items Sold
         </MenuItem>
       </Menu>
       <DrawerHeader />

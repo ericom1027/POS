@@ -13,6 +13,9 @@ const path = require("path");
 // dotenv config
 dotEnv.config();
 
+// Set timezone
+process.env.TZ = "Asia/Manila";
+
 const app = express();
 
 // Middlewares

@@ -1,6 +1,7 @@
 const Shift = require("../models/Shift");
 const User = require("../models/User");
 const Bills = require("../models/Bills");
+const moment = require("moment-timezone");
 
 // Controller for opening a new shift
 exports.openShift = async (req, res) => {
@@ -93,19 +94,25 @@ exports.getAllShifts = async (req, res) => {
       parseInt(selectedDateParts[1]) // Day
     );
 
+    // Convert selected date to server timezone (Asia/Manila)
+    const selectedDateServerTimezone = moment
+      .utc(selectedDate)
+      .tz("Asia/Manila")
+      .toDate();
+
     const startOfDay = new Date(
-      selectedDate.getFullYear(),
-      selectedDate.getMonth(),
-      selectedDate.getDate(),
+      selectedDateServerTimezone.getFullYear(),
+      selectedDateServerTimezone.getMonth(),
+      selectedDateServerTimezone.getDate(),
       0,
       0,
       0
     );
 
     const endOfDay = new Date(
-      selectedDate.getFullYear(),
-      selectedDate.getMonth(),
-      selectedDate.getDate(),
+      selectedDateServerTimezone.getFullYear(),
+      selectedDateServerTimezone.getMonth(),
+      selectedDateServerTimezone.getDate(),
       23,
       59,
       59

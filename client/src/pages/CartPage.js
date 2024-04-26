@@ -261,13 +261,13 @@ export default function CartPage() {
                   >
                     <option value="">Select Payment Method</option>
                     <option value="Cash">Cash</option>
-                    <option value="Card">Card</option>
+                    {/* <option value="Card">Card</option> */}
                   </Form.Select>
                 </Form.Group>
                 <Form.Group>
                   <Form.Control
                     className="input-field mt-3"
-                    type="number"
+                    type="text"
                     placeholder="Enter Amount"
                     name="cash"
                     id="cashInput"

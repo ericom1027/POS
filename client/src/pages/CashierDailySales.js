@@ -9,32 +9,58 @@ import Stack from "@mui/material/Stack";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const DailySalesTable = () => {
   const [dailySales, setDailySales] = useState([]);
   const [grandTotal, setGrandTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const componentRef = useRef();
 
   useEffect(() => {
     const fetchDailySales = async () => {
       try {
+        const timestamp = selectedDate.getTime();
         const response = await axios.get(
-          "https://pos-cbfa.onrender.com/shifts/getCashierTotalSales"
+          "https://pos-cbfa.onrender.com/bills/daily-sales",
+          {
+            params: {
+              createdAt: timestamp,
+            },
+          }
         );
-        setDailySales(response.data);
+
+        const salesByCashier = {};
+        response.data.forEach((transaction) => {
+          const { cashierName, totalAmount } = transaction;
+          if (!salesByCashier[cashierName]) {
+            salesByCashier[cashierName] = 0;
+          }
+          salesByCashier[cashierName] += totalAmount;
+        });
+
+        const dailySalesData = Object.keys(salesByCashier).map(
+          (cashierName) => ({
+            cashierName,
+            totalSales: salesByCashier[cashierName],
+          })
+        );
+
+        setDailySales(dailySalesData);
       } catch (error) {
         console.error("Error fetching daily sales:", error);
       }
     };
 
     fetchDailySales();
-  }, []);
+  }, [selectedDate]);
 
   useEffect(() => {
     const total = dailySales.reduce(
-      (accumulator, sale) => accumulator + sale.totalSales,
+      (accumulator, sale) => accumulator + (sale.totalSales || 0),
       0
     );
     setGrandTotal(total);
@@ -51,7 +77,6 @@ const DailySalesTable = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = dailySales.slice(indexOfFirstItem, indexOfLastItem);
-
   return (
     <Box sx={{ display: "flex" }}>
       <Sidenav />
@@ -66,6 +91,10 @@ const DailySalesTable = () => {
         </Button>
         <div className="container-fluid" ref={componentRef}>
           <h4>Daily Sales by Employee</h4>
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+          />
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -75,22 +104,30 @@ const DailySalesTable = () => {
               </tr>
             </thead>
             <tbody>
-              {currentItems.map((sale, index) => (
-                <tr key={index}>
-                  <td>{sale.day}</td>
-                  <td>{sale.cashierName}</td>
-                  <td>{sale.totalSales.toFixed(2)}</td>
+              {dailySales.length === 0 ? (
+                <tr>
+                  <td colSpan="3">No sales for the selected date.</td>
                 </tr>
-              ))}
+              ) : (
+                currentItems.map((sale, index) => (
+                  <tr key={index}>
+                    <td>{sale?.day}</td>
+                    <td>{sale?.cashierName}</td>
+                    <td>{sale?.totalSales ? sale.totalSales.toFixed(2) : 0}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan="2" className="text-end">
-                  Grand Total
-                </td>
-                <td>{grandTotal.toFixed(2)}</td>
-              </tr>
-            </tfoot>
+            {dailySales.length !== 0 && (
+              <tfoot>
+                <tr>
+                  <td colSpan="2" className="text-end">
+                    Grand Total
+                  </td>
+                  <td>{grandTotal.toFixed(2)}</td>
+                </tr>
+              </tfoot>
+            )}
           </Table>
         </div>
         <Stack spacing={2} alignItems="flex-end">

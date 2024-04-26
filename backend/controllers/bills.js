@@ -1,5 +1,5 @@
 const Bills = require("../models/Bills");
-
+const moment = require("moment-timezone");
 // Add Bills
 module.exports.addBillsController = (req, res) => {
   const {
@@ -334,17 +334,12 @@ module.exports.getDailySalesTotal = async (req, res) => {
 module.exports.fetchDailyTotalSoldItemsPerItem = async (req, res) => {
   try {
     const { startOfDay, endOfDay } = req.body;
-    // console.log("Start Date:", startOfDay);
-    // console.log("End Date:", endOfDay);
 
-    // Parse the start and end dates from the request body
-    const startDate = new Date(startOfDay);
-    const endDate = new Date(endOfDay);
-    endDate.setDate(endDate.getDate() + 1); // Increment endDate by 1 day to include all records on the end day
+    // Parse start and end dates
+    const startDate = moment.tz(startOfDay, "Asia/Manila").toDate();
+    const endDate = moment.tz(endOfDay, "Asia/Manila").endOf("day").toDate();
 
-    // console.log("Start Date:", startDate);
-    // console.log("End Date:", endDate);
-
+    // Aggregate data for the specified date range
     const dailyTotalSoldItems = await Bills.aggregate([
       {
         $match: {
@@ -383,8 +378,6 @@ module.exports.fetchDailyTotalSoldItemsPerItem = async (req, res) => {
         },
       },
     ]);
-
-    // console.log("Daily Total Sold Items:", dailyTotalSoldItems);
 
     res.status(200).json({ success: true, data: dailyTotalSoldItems });
   } catch (err) {

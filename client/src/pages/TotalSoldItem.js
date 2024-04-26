@@ -16,19 +16,18 @@ const TotalSoldItem = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [grandTotal, setGrandTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(10);
+
   const componentRef = useRef();
 
   useEffect(() => {
     const fetchDailySales = async () => {
       try {
-        // Set the selected date to start and end of the day
         const startOfDay = new Date(selectedDate);
         startOfDay.setHours(0, 0, 0, 0);
         const endOfDay = new Date(selectedDate);
         endOfDay.setHours(23, 59, 59, 999);
 
-        // Fetch daily sales for the selected date
         const response = await axios.post(
           "https://pos-cbfa.onrender.com/bills/sales",
           {
@@ -36,7 +35,6 @@ const TotalSoldItem = () => {
             endOfDay: endOfDay.toISOString(),
           }
         );
-        console.log("Daily Sales Data:", response.data.data);
         setDailySales(response.data.data);
       } catch (error) {
         console.error("Error fetching daily sales:", error);
@@ -78,21 +76,22 @@ const TotalSoldItem = () => {
         >
           Print
         </Button>
-        <div className="date-picker">
-          <div>
-            <label>
-              Date:
+        <div className="date-picker-container">
+          <div className="date-picker">
+            <div>
+              <label>Date:</label>
               <DatePicker
+                placeholderText="Select Date"
                 selected={selectedDate}
                 onChange={(date) => setSelectedDate(date)}
                 className="form-control"
                 maxDate={new Date()}
               />
-            </label>
+            </div>
           </div>
         </div>
         <div className="container-fluid" ref={componentRef}>
-          <h4>Daily Total Sold Item by Employee</h4>
+          <h4>Daily Items Sold</h4>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -102,34 +101,56 @@ const TotalSoldItem = () => {
                 <th>Item</th>
                 <th>Price</th>
                 <th>Total Quantity</th>
-                <th>Total Price</th>
+                <th>Total Amount</th>
               </tr>
             </thead>
             <tbody>
-              {currentItems.map((sale, index) => (
-                <tr key={index}>
-                  <td>
-                    {new Date(sale.createdAt).toLocaleString("en-PH", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    })}
-                  </td>
-                  <td>
-                    {new Date(sale.createdAt).toLocaleString("en-PH", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      second: "2-digit",
-                    })}
-                  </td>
-                  <td>{sale.cashierName}</td>
-                  <td>{sale.item}</td>
-                  <td>{sale.price.toFixed(2)}</td>
-                  <td>{sale.totalQuantity}</td>
-                  <td>{sale.totalPrice.toFixed(2)}</td>
+              {currentItems.length === 0 ? (
+                <tr>
+                  <td colSpan="6">No sales for the selected date.</td>
                 </tr>
-              ))}
+              ) : (
+                Object.values(
+                  currentItems.reduce((acc, sale) => {
+                    if (!acc[sale.item]) {
+                      acc[sale.item] = {
+                        dateOrder: new Date(sale.createdAt).toLocaleDateString(
+                          "en-PH"
+                        ),
+                        time: new Date(sale.createdAt).toLocaleTimeString(
+                          "en-PH",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit",
+                          }
+                        ),
+                        cashierName: sale.cashierName,
+                        item: sale.item,
+                        price: sale.price,
+                        totalQuantity: sale.totalQuantity,
+                        totalPrice: sale.totalPrice,
+                      };
+                    } else {
+                      acc[sale.item].totalQuantity += sale.totalQuantity;
+                      acc[sale.item].totalPrice += sale.totalPrice;
+                    }
+                    return acc;
+                  }, {})
+                ).map((sale, index) => (
+                  <tr key={index}>
+                    <td>{sale.dateOrder}</td>
+                    <td>{sale.time}</td>
+                    <td>{sale.cashierName}</td>
+                    <td>{sale.item}</td>
+                    <td>{sale.price.toFixed(2)}</td>
+                    <td>{sale.totalQuantity}</td>
+                    <td>{sale.totalPrice.toFixed(2)}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
+
             <tfoot>
               <tr>
                 <td colSpan="6" className="text-end">

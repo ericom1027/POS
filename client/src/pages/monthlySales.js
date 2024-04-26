@@ -94,7 +94,11 @@ const MonthlySales = () => {
                     monthlySales.map((sale, index) => (
                       <tr key={index}>
                         <td>
-                          {new Date(sale.createdAt).toLocaleString("en-PH")}
+                          {new Date(sale.createdAt).toLocaleString("en-PH", {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                          })}
                         </td>
                         <td>{sale.customer}</td>
                         <td>{sale.invoiceNumber}</td>

@@ -12,6 +12,7 @@ import Stack from "@mui/material/Stack";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import moment from "moment-timezone";
 
 const ShiftPage = () => {
   const { user, setUser } = useContext(UserContext);
@@ -31,15 +32,14 @@ const ShiftPage = () => {
   });
 
   const formatDate = (date) => {
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    return `${month}-${day}-${year}`;
+    const formattedDate = moment(date).format("MM-DD-YYYY"); // I-convert ang petsa gamit ang moment-timezone
+    return formattedDate;
   };
 
   const fetchShifts = async () => {
     try {
       const formattedDate = formatDate(selectedDate);
+      console.log("Formatted Date:", formattedDate); // I-debug ang formattedDate
       const response = await axios.post(
         "https://pos-cbfa.onrender.com/shifts/allShift",
         { selectedDate: formattedDate }
@@ -141,25 +141,16 @@ const ShiftPage = () => {
                     <td>{index + 1}</td>
                     <td>{shift.user.firstName}</td>
                     <td>
-                      {new Date(shift.startTime).toLocaleString("en-PH", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                      })}
+                      {moment(shift.startTime).format("MM-DD-YYYY")}{" "}
+                      {/* I-convert ang petsa gamit ang moment-timezone */}
                     </td>
                     <td>
-                      {new Date(shift.startTime).toLocaleString("en-PH", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        second: "2-digit",
-                      })}
+                      {moment(shift.startTime).format("hh:mm:ss A")}{" "}
+                      {/* I-convert ang oras gamit ang moment-timezone */}
                     </td>
                     <td>
-                      {new Date(shift.endTime).toLocaleString("en-PH", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        second: "2-digit",
-                      })}
+                      {moment(shift.endTime).format("hh:mm:ss A")}{" "}
+                      {/* I-convert ang oras gamit ang moment-timezone */}
                     </td>
                     <td>
                       {shift.startingCash

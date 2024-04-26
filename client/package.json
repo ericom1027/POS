@@ -16,6 +16,7 @@
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
     "install": "^0.13.0",
+    "moment-timezone": "^0.5.45",
     "npm": "^10.5.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
@@ -59,5 +60,5 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
- }
+  }
 }
