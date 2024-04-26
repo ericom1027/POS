@@ -34,7 +34,10 @@ function BillModal({ bill, show, onHide, onVoid }) {
           <div className="mt-2" ref={componentRef}>
             <div className="text-center mb-2">
               <h3>Kanto Siete Pares Mami</h3>
-              <p> Address: Manila, Philippines</p>
+              <p>
+                {" "}
+                Address: 142 MA, CLARA, Barangay 111, DISTRICT 2, CALOOCAN CITY
+              </p>
               {/* <p>Contact No. 12345678901 | Address: Manila, Philippines</p> */}
               {/* <p>VAT Reg TIN: 240-000-000-000-00000</p> */}
               <h6 className="text-center">SALES RECEIPT</h6>
