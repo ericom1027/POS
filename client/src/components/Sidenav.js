@@ -191,9 +191,9 @@ export default function Sidenav() {
             },
             { text: "Bills", icon: <FileCopyOutlinedIcon />, route: "/bills" },
             (user.id === null || !user.isAdmin) && {
-              text: "Shift",
+              text: "Close Shift",
               icon: <AccessTimeOutlinedIcon />,
-              route: "/userShift",
+              route: "/closeShift",
             },
 
             (user.id === null || user.isAdmin) && {
@@ -214,7 +214,7 @@ export default function Sidenav() {
               route: "/users",
             },
 
-            {
+            (user.id === null || user.isAdmin) && {
               text: "Logout",
               icon: <ExitToAppOutlinedIcon />,
               route: "/logout",
@@ -343,6 +343,13 @@ export default function Sidenav() {
         >
           <AccessTimeOutlinedIcon />
           Shift by Employee
+        </MenuItem>
+        <MenuItem
+          onClick={() => handleSubButtonClick("/totalSoldItem")}
+          className="totalSoldItemMenuItem"
+        >
+          <AccessTimeOutlinedIcon />
+          Total Sold Item
         </MenuItem>
       </Menu>
       <DrawerHeader />

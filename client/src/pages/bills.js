@@ -34,9 +34,10 @@ function BillModal({ bill, show, onHide, onVoid }) {
           <div className="mt-2" ref={componentRef}>
             <div className="text-center mb-2">
               <h3>Kanto Siete Pares Mami</h3>
-              <p>Contact No. 12345678901 | Address: Manila, Philippines</p>
-              <p>VAT Reg TIN: 240-000-000-000-00000</p>
-              <h6 className="text-center">SALES INVOICE</h6>
+              <p> Address: Manila, Philippines</p>
+              {/* <p>Contact No. 12345678901 | Address: Manila, Philippines</p> */}
+              {/* <p>VAT Reg TIN: 240-000-000-000-00000</p> */}
+              <h6 className="text-center">SALES RECEIPT</h6>
               <hr />
             </div>
             <div className="text-left">
@@ -110,7 +111,7 @@ function BillModal({ bill, show, onHide, onVoid }) {
                 </p>
                 <p>Thank you for your order!</p>
                 <p>
-                  This serves as your <b>SALES INVOICE</b>
+                  This serves as your <b>SALES RECEIPT</b>
                 </p>
                 <p>EMD IT Solutions. | All rights reserved </p>
               </div>

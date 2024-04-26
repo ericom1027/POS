@@ -131,9 +131,6 @@ body{
   color: white;
   }
 
-
-
-
 /*----------------- Login Page---------------------- */
 
 .login-form{
@@ -281,6 +278,24 @@ body{
   max-width: 400px; 
   color: white;
   }
+  .Close-Form{
+    height: 100vh;
+    margin: 0 auto; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+  }
+
+ .Close-border{
+  background-color: transparent;
+  box-shadow: rgba(107, 148, 196, 0.3) 0px 15px 30px 5px, rgba(82, 113, 197, 0.2) 0px 10px 10px 5px;
+  border-radius: 15px;
+  padding: 80px;
+  height: auto; 
+  width: 100%; 
+  max-width: 400px; 
+  color: rgb(62, 132, 173);
+  }
 
 /* ========WEEKLY SALES =================== */
 .date-picker{
@@ -346,9 +361,6 @@ body{
     padding: 10px; 
   }
 }
-
-
-
 
 @media screen and (max-width: 480px) {
   .login-form {

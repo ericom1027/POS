@@ -329,3 +329,66 @@ module.exports.getDailySalesTotal = async (req, res) => {
       .json({ message: "An error occurred while processing your request." });
   }
 };
+
+// Controller function to fetch daily total sold items per item and corresponding cashier names
+module.exports.fetchDailyTotalSoldItemsPerItem = async (req, res) => {
+  try {
+    const { startOfDay, endOfDay } = req.body;
+    // console.log("Start Date:", startOfDay);
+    // console.log("End Date:", endOfDay);
+
+    // Parse the start and end dates from the request body
+    const startDate = new Date(startOfDay);
+    const endDate = new Date(endOfDay);
+    endDate.setDate(endDate.getDate() + 1); // Increment endDate by 1 day to include all records on the end day
+
+    // console.log("Start Date:", startDate);
+    // console.log("End Date:", endDate);
+
+    const dailyTotalSoldItems = await Bills.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+        },
+      },
+      {
+        $unwind: "$cartItems",
+      },
+      {
+        $group: {
+          _id: {
+            createdAt: "$createdAt",
+            cashierName: "$cashierName",
+            item: "$cartItems.item",
+            price: "$cartItems.price",
+          },
+          totalQuantity: { $sum: "$cartItems.qty" },
+          totalPrice: {
+            $sum: { $multiply: ["$cartItems.qty", "$cartItems.price"] },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          createdAt: "$_id.createdAt",
+          cashierName: "$_id.cashierName",
+          item: "$_id.item",
+          price: "$_id.price",
+          totalQuantity: 1,
+          totalPrice: 1,
+        },
+      },
+    ]);
+
+    // console.log("Daily Total Sold Items:", dailyTotalSoldItems);
+
+    res.status(200).json({ success: true, data: dailyTotalSoldItems });
+  } catch (err) {
+    console.error("Error fetching daily total sold items per item:", err);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
+  }
+};

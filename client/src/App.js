@@ -25,6 +25,8 @@ import Dashboard from "./pages/dashboard";
 import ErrorPage from "./pages/Error";
 import EmpSales from "./pages/CashierDailySales";
 import UserShiftPage from "./pages/userShift";
+import TotalSoldItem from "./pages/TotalSoldItem";
+import CloseShift from "./pages/CloseShift";
 
 export default function App() {
   const [user, setUser] = useState({
@@ -106,16 +108,18 @@ export default function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/shift" element={<ShiftPage />} />
               <Route path="/userShift" element={<UserShiftPage />} />
+              <Route path="/closeShift" element={<CloseShift />} />
+              <Route path="/totalSoldItem" element={<TotalSoldItem />} />
               <Route path="/users" element={<UsersPage />} />
               <Route path="/logout" element={<Logout />} />
             </>
           )}
 
           {/* Public routes */}
-          <Route path="*" element={<ErrorPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset/:token" element={<ResetPassword />} />
           <Route path="/login" element={<Login />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
     </UserProvider>
