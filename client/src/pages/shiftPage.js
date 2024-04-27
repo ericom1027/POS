@@ -20,7 +20,7 @@ const ShiftPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  const [dailyTotalSales, setDailyTotalSales] = useState(0); // State for daily total sales
+  const [dailySalesPerCashier, setDailySalesPerCashier] = useState({}); // State for daily sales per cashier
   const componentRef = useRef();
 
   const toastOptions = {
@@ -76,34 +76,37 @@ const ShiftPage = () => {
   useEffect(() => {
     const fetchDailySales = async () => {
       try {
-        const startOfDay = new Date();
-        startOfDay.setHours(0, 0, 0, 0);
-        const endOfDay = new Date();
-        endOfDay.setHours(23, 59, 59, 999);
-
-        const response = await axios.post(
-          "https://pos-cbfa.onrender.com/bills/day-sales",
+        const timestamp = selectedDate.getTime();
+        const response = await axios.get(
+          "https://pos-cbfa.onrender.com/bills/daily-sales",
           {
-            startOfDay: startOfDay,
-            endOfDay: endOfDay,
+            params: {
+              createdAt: timestamp,
+            },
           }
         );
 
-        const dailySales = response.data.dailySales;
+        const salesByCashier = {};
+        response.data.forEach((transaction) => {
+          const { cashierName, totalAmount, createdAt } = transaction;
+          const transactionDate = new Date(createdAt);
+          const day = transactionDate.toLocaleDateString();
 
-        let total = 0;
-        for (const date in dailySales) {
-          total += dailySales[date];
-        }
+          if (!salesByCashier[cashierName]) {
+            salesByCashier[cashierName] = { day, totalSales: 0, cashierName };
+          }
 
-        setDailyTotalSales(total);
+          salesByCashier[cashierName].totalSales += totalAmount;
+        });
+
+        setDailySalesPerCashier(salesByCashier);
       } catch (error) {
         console.error("Error fetching daily sales:", error);
       }
     };
 
     fetchDailySales();
-  }, []);
+  }, [selectedDate]);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -158,29 +161,32 @@ const ShiftPage = () => {
                 </tr>
               ) : (
                 currentItems.map((shift, index) => {
+                  const startingCash = parseFloat(shift.startingCash) || 0;
+                  const endingCash = parseFloat(shift.endingCash) || 0;
+                  const cashierName = shift.user.firstName;
+                  const expectedCashAmount =
+                    dailySalesPerCashier[cashierName]?.totalSales || 0;
                   const difference =
-                    shift.startingCash + shift.endingCash - dailyTotalSales; // Calculate the difference
+                    startingCash + endingCash - expectedCashAmount; // Calculate the difference
                   return (
                     <tr key={`shift-${index}`}>
                       <td>{index + 1}</td>
-                      <td>{shift.user.firstName}</td>
+                      <td>{cashierName}</td>
                       <td>{moment(shift.startTime).format("MM-DD-YYYY")} </td>
                       <td>{moment(shift.startTime).format("hh:mm:ss A")} </td>
                       <td>{moment(shift.endTime).format("hh:mm:ss A")} </td>
+                      <td>{startingCash.toFixed(2)}</td>
+                      <td>{endingCash.toFixed(2)}</td>
                       <td>
-                        {shift.startingCash
-                          ? shift.startingCash.toFixed(2)
-                          : "0.00"}
+                        {typeof expectedCashAmount === "number"
+                          ? expectedCashAmount.toFixed(2)
+                          : "N/A"}
                       </td>
+                      {/* Display expected cash amount */}
                       <td>
-                        {shift.endingCash
-                          ? shift.endingCash.toFixed(2)
-                          : "0.00"}
-                      </td>
-                      <td>{dailyTotalSales.toFixed(2)}</td>{" "}
-                      {/* Display daily total sales */}
-                      <td>{difference.toFixed(2)}</td>{" "}
-                      {/* Display the calculated difference */}
+                        {isNaN(difference) ? "N/A" : difference.toFixed(2)}
+                      </td>{" "}
+                      {/* Display the calculated difference, handle NaN */}
                     </tr>
                   );
                 })
