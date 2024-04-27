@@ -33,7 +33,7 @@ const ItemList = ({ item }) => {
         <Card.Img className="custom-card-img" variant="top" src={item.image} />
         <Card.Body>
           {/* <div onClick={() => handleAddToCart()}> */}
-          <Card.Title>{item.name}</Card.Title>
+          <Card.Text>{item.name}</Card.Text>
           <Card.Text>{item.size}</Card.Text>
           <Card.Text>{formattedPrice}</Card.Text>
           {/* </div> */}

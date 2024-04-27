@@ -105,7 +105,7 @@ export default function Home() {
                 );
               })
               .map((item) => (
-                <Col key={item._id} xs={3} md={3}>
+                <Col className="custom-col" key={item._id} xs={3} md={3}>
                   <ItemList item={item} />
                 </Col>
               ))}
