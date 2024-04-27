@@ -16,7 +16,7 @@ const TotalSoldItem = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [grandTotal, setGrandTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(20);
 
   const componentRef = useRef();
 
@@ -107,7 +107,7 @@ const TotalSoldItem = () => {
             <tbody>
               {currentItems.length === 0 ? (
                 <tr>
-                  <td colSpan="6">No sales for the selected date.</td>
+                  <td colSpan="7">No sales for the selected date.</td>
                 </tr>
               ) : (
                 Object.values(

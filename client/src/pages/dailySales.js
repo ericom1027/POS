@@ -22,7 +22,6 @@ function DailySales() {
     const fetchDailySales = async () => {
       try {
         const timestamp = selectedDate.getTime();
-        // console.log("Timestamp sent to backend:", timestamp);
         const response = await axios.get(
           "https://pos-cbfa.onrender.com/bills/daily-sales",
           {
@@ -73,6 +72,7 @@ function DailySales() {
           <div className="date-picker">
             <div>
               <label>Date:</label>
+              {/* Date picker */}
               <DatePicker
                 placeholderText="Select Date"
                 selected={selectedDate}
@@ -91,8 +91,10 @@ function DailySales() {
           >
             Print
           </Button>
+
           <div className="container-fluid" ref={componentRef}>
             <h4 className="mt-3 text-center">Daily Sales Report</h4>
+
             <Table className="mt-2" striped bordered hover>
               <thead className="text-center">
                 <tr>
@@ -109,15 +111,6 @@ function DailySales() {
                   currentItems.map((sale) =>
                     !sale.voided ? (
                       <tr key={sale._id}>
-                        {/* <td>
-                          {sale.cartItems &&
-                            sale.cartItems.map((item, idx) => (
-                              <div key={idx}>
-                                {item.item} - Qty: {item.qty} - Price:{" "}
-                                {item.price.toFixed(2)}
-                              </div>
-                            ))}
-                        </td> */}
                         <td>
                           {new Date(sale.createdAt).toLocaleString("en-PH", {
                             year: "numeric",
@@ -139,6 +132,7 @@ function DailySales() {
                   </tr>
                 )}
               </tbody>
+
               <tfoot>
                 <tr>
                   <td colSpan="5" className="text-end">
@@ -149,6 +143,7 @@ function DailySales() {
               </tfoot>
             </Table>
           </div>
+          {/* Pagination */}
           <Stack spacing={2} alignItems="flex-end">
             <Pagination
               color="primary"

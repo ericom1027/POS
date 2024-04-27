@@ -167,7 +167,7 @@ const ShiftPage = () => {
                   const expectedCashAmount =
                     dailySalesPerCashier[cashierName]?.totalSales || 0;
                   const difference =
-                    startingCash + endingCash - expectedCashAmount; // Calculate the difference
+                    startingCash + endingCash - expectedCashAmount;
                   return (
                     <tr key={`shift-${index}`}>
                       <td>{index + 1}</td>
