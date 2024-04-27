@@ -35,19 +35,18 @@ const DailySalesTable = () => {
 
         const salesByCashier = {};
         response.data.forEach((transaction) => {
-          const { cashierName, totalAmount } = transaction;
+          const { cashierName, totalAmount, createdAt } = transaction;
+          const transactionDate = new Date(createdAt);
+          const day = transactionDate.toLocaleDateString();
+
           if (!salesByCashier[cashierName]) {
-            salesByCashier[cashierName] = 0;
+            salesByCashier[cashierName] = { day, totalSales: 0, cashierName };
           }
-          salesByCashier[cashierName] += totalAmount;
+
+          salesByCashier[cashierName].totalSales += totalAmount;
         });
 
-        const dailySalesData = Object.keys(salesByCashier).map(
-          (cashierName) => ({
-            cashierName,
-            totalSales: salesByCashier[cashierName],
-          })
-        );
+        const dailySalesData = Object.values(salesByCashier);
 
         setDailySales(dailySalesData);
       } catch (error) {
