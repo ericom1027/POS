@@ -20,6 +20,7 @@ const ShiftPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
+  const [dailyTotalSales, setDailyTotalSales] = useState(0); // State for daily total sales
   const componentRef = useRef();
 
   const toastOptions = {
@@ -39,7 +40,6 @@ const ShiftPage = () => {
   const fetchShifts = async () => {
     try {
       const formattedDate = formatDate(selectedDate);
-      // console.log("Formatted Date:", formattedDate);
       const response = await axios.post(
         "https://pos-cbfa.onrender.com/shifts/allShift",
         { selectedDate: formattedDate }
@@ -73,6 +73,38 @@ const ShiftPage = () => {
     }
   }, [user, setUser]);
 
+  useEffect(() => {
+    const fetchDailySales = async () => {
+      try {
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0);
+        const endOfDay = new Date();
+        endOfDay.setHours(23, 59, 59, 999);
+
+        const response = await axios.post(
+          "https://pos-cbfa.onrender.com/bills/day-sales",
+          {
+            startOfDay: startOfDay,
+            endOfDay: endOfDay,
+          }
+        );
+
+        const dailySales = response.data.dailySales;
+
+        let total = 0;
+        for (const date in dailySales) {
+          total += dailySales[date];
+        }
+
+        setDailyTotalSales(total);
+      } catch (error) {
+        console.error("Error fetching daily sales:", error);
+      }
+    };
+
+    fetchDailySales();
+  }, []);
+
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -82,17 +114,6 @@ const ShiftPage = () => {
   const currentItems = shifts
     ? shifts.slice(indexOfFirstItem, indexOfLastItem)
     : [];
-
-  // Function to compute the expected cash amount
-  const computeExpectedCashAmount = (shift) => {
-    return shift.startingCash + shift.endingCash;
-  };
-
-  // Function to compute the difference
-  const computeDifference = (shift) => {
-    const expectedCashAmount = shift.startingCash + shift.endingCash;
-    return expectedCashAmount - shift.endingCash;
-  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -136,34 +157,33 @@ const ShiftPage = () => {
                   </td>
                 </tr>
               ) : (
-                currentItems.map((shift, index) => (
-                  <tr key={`shift-${index}`}>
-                    <td>{index + 1}</td>
-                    <td>{shift.user.firstName}</td>
-                    <td>
-                      {moment(shift.startTime).format("MM-DD-YYYY")}{" "}
-                      {/* I-convert ang petsa gamit ang moment-timezone */}
-                    </td>
-                    <td>
-                      {moment(shift.startTime).format("hh:mm:ss A")}{" "}
-                      {/* I-convert ang oras gamit ang moment-timezone */}
-                    </td>
-                    <td>
-                      {moment(shift.endTime).format("hh:mm:ss A")}{" "}
-                      {/* I-convert ang oras gamit ang moment-timezone */}
-                    </td>
-                    <td>
-                      {shift.startingCash
-                        ? shift.startingCash.toFixed(2)
-                        : "0.00"}
-                    </td>
-                    <td>
-                      {shift.endingCash ? shift.endingCash.toFixed(2) : "0.00"}
-                    </td>
-                    <td>{computeExpectedCashAmount(shift).toFixed(2)}</td>
-                    <td>{computeDifference(shift).toFixed(2)}</td>
-                  </tr>
-                ))
+                currentItems.map((shift, index) => {
+                  const difference =
+                    shift.startingCash + shift.endingCash - dailyTotalSales; // Calculate the difference
+                  return (
+                    <tr key={`shift-${index}`}>
+                      <td>{index + 1}</td>
+                      <td>{shift.user.firstName}</td>
+                      <td>{moment(shift.startTime).format("MM-DD-YYYY")} </td>
+                      <td>{moment(shift.startTime).format("hh:mm:ss A")} </td>
+                      <td>{moment(shift.endTime).format("hh:mm:ss A")} </td>
+                      <td>
+                        {shift.startingCash
+                          ? shift.startingCash.toFixed(2)
+                          : "0.00"}
+                      </td>
+                      <td>
+                        {shift.endingCash
+                          ? shift.endingCash.toFixed(2)
+                          : "0.00"}
+                      </td>
+                      <td>{dailyTotalSales.toFixed(2)}</td>{" "}
+                      {/* Display daily total sales */}
+                      <td>{difference.toFixed(2)}</td>{" "}
+                      {/* Display the calculated difference */}
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </Table>
