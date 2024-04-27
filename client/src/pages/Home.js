@@ -88,11 +88,11 @@ export default function Home() {
       >
         <Sidenav />
         <Box
-          className="py-0 w-100 "
+          className="py-0 w-100 top"
           component="main"
           sx={{ flexGrow: 1, p: 3 }}
         >
-          <Row>
+          <Row className="align-items-start">
             {itemsData
 
               .filter((item) => {
@@ -105,7 +105,7 @@ export default function Home() {
                 );
               })
               .map((item) => (
-                <Col className="custom-col" key={item._id} xs={3} md={3}>
+                <Col key={item._id} xs={3} md={3}>
                   <ItemList item={item} />
                 </Col>
               ))}
