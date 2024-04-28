@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { Table, Modal, Button } from "react-bootstrap";
 import { useReactToPrint } from "react-to-print";
@@ -14,6 +13,18 @@ import Stack from "@mui/material/Stack";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import PrintIcon from "@mui/icons-material/Print";
+import DatePicker from "react-datepicker";
+
+function formattedDate(date) {
+  return new Date(date).toLocaleString("en-PH", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+}
 
 function BillModal({ bill, show, onHide, onVoid }) {
   const componentRef = React.useRef();
@@ -102,16 +113,7 @@ function BillModal({ bill, show, onHide, onVoid }) {
                 {bill.totalAmount ? bill.totalAmount.toFixed(2) : ""}
               </p>
               <div className="mt-4 text-center">
-                <p>
-                  {new Date(bill.createdAt).toLocaleString("en-PH", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                  })}
-                </p>
+                <p>{formattedDate(bill.createdAt)}</p>
                 <p>Thank you for your order!</p>
                 <p>
                   This serves as your <b>SALES RECEIPT</b>
@@ -138,25 +140,33 @@ function BillModal({ bill, show, onHide, onVoid }) {
 
 export default function BillsPage() {
   const [billsData, setBillsData] = useState([]);
+  const [filteredBillsData, setFilteredBillsData] = useState([]); // State to hold filtered bills data
   const dispatch = useDispatch();
   const [popupModal, setPopupModal] = useState(false);
   const [selectBill, setSelectBill] = useState(null);
   const { user } = useContext(UserContext);
   const [currentPage, setCurrentPage] = useState(1);
-  const [billPerPage] = useState(5);
+  const [billPerPage] = useState(10);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch({ type: "SHOW_LOADING" });
         const response = await axios.get(
-          `https://pos-cbfa.onrender.com/bills/get-bills`
+          `https://pos-cbfa.onrender.com/bills/get-bills`,
+          {
+            params: {
+              date: selectedDate.toISOString(),
+            },
+          }
         );
         if (response.data && Array.isArray(response.data.bills)) {
           const sortedBills = response.data.bills.sort(
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
           );
           setBillsData(sortedBills);
+          setFilteredBillsData(sortedBills);
           dispatch({ type: "HIDE_LOADING" });
         } else {
           toast.error("No Data", response.data);
@@ -167,7 +177,7 @@ export default function BillsPage() {
     };
 
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, selectedDate]); // Include selectedDate in the dependency array
 
   const handleVoid = async () => {
     const token = localStorage.getItem("token");
@@ -202,16 +212,37 @@ export default function BillsPage() {
       toast.error("Error voiding invoice:", error);
     }
   };
+
   const indexOfLastItem = currentPage * billPerPage;
   const indexOfFirstItem = indexOfLastItem - billPerPage;
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Function to filter bills data based on selected date
+  const filterBillsByDate = () => {
+    const filteredData = billsData.filter(
+      (bill) =>
+        new Date(bill.createdAt).toLocaleDateString() ===
+        selectedDate.toLocaleDateString()
+    );
+    setFilteredBillsData(filteredData);
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
       <Sidenav />
       <div className="w-100 py-5 mt-5 mb-5 p-3">
         <h1>Invoice List</h1>
+        {user.isAdmin && ( // Render date picker only for admin users
+          <div className="mb-3">
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+              onSelect={filterBillsByDate}
+              maxDate={new Date()}
+            />
+          </div>
+        )}
         <div className="table-responsive">
           <Table striped bordered hover>
             <thead className="text-center">
@@ -233,54 +264,64 @@ export default function BillsPage() {
               </tr>
             </thead>
             <tbody>
-              {billsData
-                .slice(indexOfFirstItem, indexOfLastItem)
-                .map((bill, index) => (
-                  <tr key={index}>
-                    <td>{bill.invoiceNumber || ""}</td>
-                    {bill.customerName && <td>{bill.customerName}</td>}
-                    {bill.customerNumber && <td>{bill.customerNumber}</td>}
-                    <td>{bill.paymentMode || ""}</td>
-                    <td>
-                      {bill.cartItems &&
-                        bill.cartItems.map((item, idx) => (
-                          <div key={idx}>
-                            {item.item} - Qty: {item.qty} - Price:{" "}
-                            {item.price.toFixed(2)}
-                          </div>
-                        ))}
-                    </td>
-                    <td>{bill.subTotal ? bill.subTotal.toFixed(2) : ""}</td>
-                    <td>
-                      {bill.vatSales !== undefined
-                        ? bill.vatSales.toFixed(2)
-                        : ""}
-                    </td>
-                    <td>
-                      {bill.vatAmount !== undefined
-                        ? bill.vatAmount.toFixed(2)
-                        : ""}
-                    </td>
-                    <td>{bill.cash ? bill.cash.toFixed(2) : ""}</td>
-                    <td>{bill.change ? bill.change.toFixed(2) : ""}</td>
-                    <td>{bill.discount ? bill.discount.toFixed(2) : "0.00"}</td>
-                    <td>
-                      {bill.totalAmount ? bill.totalAmount.toFixed(2) : ""}
-                    </td>
-                    <td>{bill.voided ? "voided" : ""}</td>
-                    <td>
-                      <div className="icons">
-                        <PrintIcon
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            setSelectBill(bill);
-                            setPopupModal(true);
-                          }}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+              {filteredBillsData.length === 0 ? (
+                <tr>
+                  <td colSpan="12" className="text-center">
+                    No invoices for the selected date.
+                  </td>
+                </tr>
+              ) : (
+                filteredBillsData
+                  .slice(indexOfFirstItem, indexOfLastItem)
+                  .map((bill, index) => (
+                    <tr key={index}>
+                      <td>{bill.invoiceNumber || ""}</td>
+                      {bill.customerName && <td>{bill.customerName}</td>}
+                      {bill.customerNumber && <td>{bill.customerNumber}</td>}
+                      <td>{bill.paymentMode || ""}</td>
+                      <td>
+                        {bill.cartItems &&
+                          bill.cartItems.map((item, idx) => (
+                            <div key={idx}>
+                              {item.item} - Qty: {item.qty} - Price:{" "}
+                              {item.price.toFixed(2)}
+                            </div>
+                          ))}
+                      </td>
+                      <td>{bill.subTotal ? bill.subTotal.toFixed(2) : ""}</td>
+                      <td>
+                        {bill.vatSales !== undefined
+                          ? bill.vatSales.toFixed(2)
+                          : ""}
+                      </td>
+                      <td>
+                        {bill.vatAmount !== undefined
+                          ? bill.vatAmount.toFixed(2)
+                          : ""}
+                      </td>
+                      <td>{bill.cash ? bill.cash.toFixed(2) : ""}</td>
+                      <td>{bill.change ? bill.change.toFixed(2) : ""}</td>
+                      <td>
+                        {bill.discount ? bill.discount.toFixed(2) : "0.00"}
+                      </td>
+                      <td>
+                        {bill.totalAmount ? bill.totalAmount.toFixed(2) : ""}
+                      </td>
+                      <td>{bill.voided ? "voided" : ""}</td>
+                      <td>
+                        <div className="icons">
+                          <PrintIcon
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setSelectBill(bill);
+                              setPopupModal(true);
+                            }}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+              )}
             </tbody>
           </Table>
         </div>
@@ -288,7 +329,7 @@ export default function BillsPage() {
           <Stack spacing={2} alignItems="flex-end">
             <Pagination
               color="primary"
-              count={Math.ceil(billsData.length / billPerPage)}
+              count={Math.ceil(filteredBillsData.length / billPerPage)}
               renderItem={(item) => (
                 <PaginationItem
                   slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
