@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState, useContext } from "react";
 import { useSelector } from "react-redux";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -9,7 +9,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -91,7 +90,7 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Sidenav() {
   const { cartItems, loading } = useSelector((state) => state.rootReducer);
-  const theme = useTheme();
+
   const [open, setOpen] = useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
