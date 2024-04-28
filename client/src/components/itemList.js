@@ -34,8 +34,8 @@ const ItemList = ({ item }) => {
         <Card.Body>
           {/* <div onClick={() => handleAddToCart()}> */}
           <Card.Text>{item.name}</Card.Text>
-          <Card.Text>{item.size}</Card.Text>
-          <Card.Text>{formattedPrice}</Card.Text>
+          <label>{item.size}</label>
+          <label>{formattedPrice}</label>
           {/* </div> */}
           {/* <Button
             onClick={() => handleAddToCart()}

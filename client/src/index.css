@@ -12,8 +12,8 @@ body{
 
 .align-items-start{
   margin-top: auto;
-  box-shadow: rgba(40, 199, 199, 0.3) 0px 15px 30px 5px, rgba(79, 206, 185, 0.2) 0px 10px 10px 5px;
-  border-radius: 20px;
+  box-shadow: rgba(41, 40, 37, 0.3) 0px 15px 30px 5px, rgba(88, 90, 74, 0.2) 0px 10px 10px 5px;
+  border-radius: 15px;
 }
 
 .custom-card {
@@ -22,6 +22,8 @@ body{
   justify-content: center;
   text-align: center;
   margin: 0;
+  flex: 0 1 calc(25% - 20px); 
+  margin: 8px;
 }
 
 .custom-card-img {
@@ -359,16 +361,16 @@ body{
     height: auto; 
   }
   .custom-card {
-   flex-direction: column;
    align-content: center;
-   max-width: 200px;
-  margin-bottom: auto;
-  }
+   max-width: 300px;
+   font-size: 12px;
+   font-weight: 500;
+   }
  
   .custom-card-img {
     height: 50px; 
     width: 50px; 
-  }
+    }
 
   .shift-border {
     margin-right: 10px; 
