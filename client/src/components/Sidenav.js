@@ -37,6 +37,7 @@ import NextWeekOutlinedIcon from "@mui/icons-material/NextWeekOutlined";
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { Col, Row, Container } from "react-bootstrap";
 
 const drawerWidth = 220;
@@ -170,11 +171,7 @@ export default function Sidenav() {
         )}
         <DrawerHeader>
           <IconButton onClick={handleDrawerToggle}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
+            {open ? <ChevronLeftIcon /> : <MenuOutlinedIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
