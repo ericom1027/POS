@@ -12,6 +12,8 @@ body{
 
 .align-items-start{
   margin-top: auto;
+  box-shadow: rgba(40, 199, 199, 0.3) 0px 15px 30px 5px, rgba(79, 206, 185, 0.2) 0px 10px 10px 5px;
+  border-radius: 20px;
 }
 
 .custom-card {
@@ -19,6 +21,7 @@ body{
   flex-wrap: wrap;
   justify-content: center;
   text-align: center;
+  margin: 0;
 }
 
 .custom-card-img {
@@ -355,15 +358,16 @@ body{
     max-width: 100%; 
     height: auto; 
   }
-  /* .custom-card {
-   flex-direction: row;
+  .custom-card {
+   flex-direction: column;
    align-content: center;
-   max-width: 300px;
-  } */
+   max-width: 200px;
+  margin-bottom: auto;
+  }
  
   .custom-card-img {
-    height: 60px; /* Adjust height for smaller devices */
-    width: 60px; /* Adjust width for smaller devices */
+    height: 50px; 
+    width: 50px; 
   }
 
   .shift-border {
