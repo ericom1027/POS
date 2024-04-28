@@ -284,20 +284,21 @@ export default function BillsPage() {
             </tbody>
           </Table>
         </div>
-        <Stack spacing={2} alignItems="flex-end">
-          <Pagination
-            color="primary"
-            count={Math.ceil(billsData.length / billPerPage)}
-            renderItem={(item) => (
-              <PaginationItem
-                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                {...item}
-              />
-            )}
-            onChange={(event, page) => paginate(page)}
-          />
-        </Stack>
-
+        {user.isAdmin ? (
+          <Stack spacing={2} alignItems="flex-end">
+            <Pagination
+              color="primary"
+              count={Math.ceil(billsData.length / billPerPage)}
+              renderItem={(item) => (
+                <PaginationItem
+                  slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                  {...item}
+                />
+              )}
+              onChange={(event, page) => paginate(page)}
+            />
+          </Stack>
+        ) : null}
         <BillModal
           bill={selectBill}
           show={popupModal}
