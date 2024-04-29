@@ -16,7 +16,7 @@ function DailySales() {
   const [totalSales, setTotalSales] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(500);
 
   useEffect(() => {
     const fetchDailySales = async () => {

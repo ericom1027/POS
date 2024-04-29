@@ -149,13 +149,16 @@ const ShiftPage = () => {
                 <th>Starting cash</th>
                 <th>Actual cash amount</th>
                 <th>Expected cash amount</th>
-                <th>Difference</th>
+                <th>Total Amount</th>
+                <th>Difference</th> {/* Added Difference column */}
               </tr>
             </thead>
             <tbody>
               {!currentItems || currentItems.length === 0 ? (
                 <tr>
-                  <td colSpan="9" className="text-center">
+                  <td colSpan="10" className="text-center">
+                    {" "}
+                    {/* Adjusted colspan to 10 */}
                     No records found for the selected date.
                   </td>
                 </tr>
@@ -166,8 +169,8 @@ const ShiftPage = () => {
                   const cashierName = shift.user.firstName;
                   const expectedCashAmount =
                     dailySalesPerCashier[cashierName]?.totalSales || 0;
-                  const difference =
-                    startingCash + endingCash - expectedCashAmount;
+                  const total = endingCash - startingCash;
+                  const difference = expectedCashAmount - total;
                   return (
                     <tr key={`shift-${index}`}>
                       <td>{index + 1}</td>
@@ -182,11 +185,10 @@ const ShiftPage = () => {
                           ? expectedCashAmount.toFixed(2)
                           : "N/A"}
                       </td>
-                      {/* Display expected cash amount */}
+                      <td>{isNaN(total) ? "N/A" : total.toFixed(2)}</td>{" "}
                       <td>
                         {isNaN(difference) ? "N/A" : difference.toFixed(2)}
-                      </td>{" "}
-                      {/* Display the calculated difference, handle NaN */}
+                      </td>
                     </tr>
                   );
                 })
