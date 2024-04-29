@@ -282,7 +282,9 @@ export default function Sidenav() {
                 ...(open && { display: "none" }),
               }}
             ></IconButton>
-
+            <Col>
+              <h6 id="typing-text">KANTO SIETE PARES MAMI - Main Branch</h6>
+            </Col>
             <div
               style={{
                 display: "flex",

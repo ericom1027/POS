@@ -7,20 +7,13 @@ import UserContext from "../UserContext";
 import { toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import { useReactToPrint } from "react-to-print";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import PaginationItem from "@mui/material/PaginationItem";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import moment from "moment-timezone";
 
 const ShiftPage = () => {
   const { user, setUser } = useContext(UserContext);
   const [shifts, setShifts] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
-  const [dailySalesPerCashier, setDailySalesPerCashier] = useState({}); // State for daily sales per cashier
+  const [dailySalesPerCashier, setDailySalesPerCashier] = useState({});
   const componentRef = useRef();
 
   const toastOptions = {
@@ -108,16 +101,6 @@ const ShiftPage = () => {
     fetchDailySales();
   }, [selectedDate]);
 
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-  const pageCount = shifts ? Math.ceil(shifts.length / itemsPerPage) : 0;
-  const indexOfLastItem = shifts ? currentPage * itemsPerPage : 0;
-  const indexOfFirstItem = shifts ? indexOfLastItem - itemsPerPage : 0;
-  const currentItems = shifts
-    ? shifts.slice(indexOfFirstItem, indexOfLastItem)
-    : [];
-
   return (
     <Box sx={{ display: "flex" }}>
       <Sidenav />
@@ -150,65 +133,40 @@ const ShiftPage = () => {
                 <th>Actual cash amount</th>
                 <th>Expected cash amount</th>
                 <th>Total Amount</th>
-                <th>Difference</th> {/* Added Difference column */}
+                <th>Difference</th>
               </tr>
             </thead>
             <tbody>
-              {!currentItems || currentItems.length === 0 ? (
-                <tr>
-                  <td colSpan="10" className="text-center">
-                    {" "}
-                    {/* Adjusted colspan to 10 */}
-                    No records found for the selected date.
-                  </td>
-                </tr>
-              ) : (
-                currentItems.map((shift, index) => {
-                  const startingCash = parseFloat(shift.startingCash) || 0;
-                  const endingCash = parseFloat(shift.endingCash) || 0;
-                  const cashierName = shift.user.firstName;
-                  const expectedCashAmount =
-                    dailySalesPerCashier[cashierName]?.totalSales || 0;
-                  const total = endingCash - startingCash;
-                  const difference = expectedCashAmount - total;
-                  return (
-                    <tr key={`shift-${index}`}>
-                      <td>{index + 1}</td>
-                      <td>{cashierName}</td>
-                      <td>{moment(shift.startTime).format("MM-DD-YYYY")} </td>
-                      <td>{moment(shift.startTime).format("hh:mm:ss A")} </td>
-                      <td>{moment(shift.endTime).format("hh:mm:ss A")} </td>
-                      <td>{startingCash.toFixed(2)}</td>
-                      <td>{endingCash.toFixed(2)}</td>
-                      <td>
-                        {typeof expectedCashAmount === "number"
-                          ? expectedCashAmount.toFixed(2)
-                          : "N/A"}
-                      </td>
-                      <td>{isNaN(total) ? "N/A" : total.toFixed(2)}</td>{" "}
-                      <td>
-                        {isNaN(difference) ? "N/A" : difference.toFixed(2)}
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
+              {shifts.map((shift, index) => {
+                const startingCash = parseFloat(shift.startingCash) || 0;
+                const endingCash = parseFloat(shift.endingCash) || 0;
+                const cashierName = shift.user.firstName;
+                const expectedCashAmount =
+                  dailySalesPerCashier[cashierName]?.totalSales || 0;
+                const total = endingCash - startingCash;
+                const difference = expectedCashAmount - total;
+                return (
+                  <tr key={`shift-${index}`}>
+                    <td>{index + 1}</td>
+                    <td>{cashierName}</td>
+                    <td>{moment(shift.startTime).format("MM-DD-YYYY")}</td>
+                    <td>{moment(shift.startTime).format("hh:mm:ss A")}</td>
+                    <td>{moment(shift.endTime).format("hh:mm:ss A")}</td>
+                    <td>{startingCash.toFixed(2)}</td>
+                    <td>{endingCash.toFixed(2)}</td>
+                    <td>
+                      {typeof expectedCashAmount === "number"
+                        ? expectedCashAmount.toFixed(2)
+                        : "N/A"}
+                    </td>
+                    <td>{isNaN(total) ? "N/A" : total.toFixed(2)}</td>
+                    <td>{isNaN(difference) ? "N/A" : difference.toFixed(2)}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
         </div>
-        <Stack spacing={2} alignItems="flex-end">
-          <Pagination
-            color="primary"
-            count={pageCount}
-            renderItem={(item) => (
-              <PaginationItem
-                slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                {...item}
-              />
-            )}
-            onChange={(event, page) => paginate(page)}
-          />
-        </Stack>
       </div>
     </Box>
   );

@@ -10,8 +10,6 @@ function DailySales() {
   const [dailySales, setDailySales] = useState([]);
   const [totalSales, setTotalSales] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(100);
 
   useEffect(() => {
     const fetchDailySales = async () => {
@@ -51,9 +49,7 @@ function DailySales() {
     content: () => componentRef.current,
   });
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = dailySales.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = dailySales;
 
   return (
     <Box sx={{ display: "flex" }}>

@@ -237,8 +237,10 @@ export default function BillsPage() {
           <div className="mb-3">
             <DatePicker
               selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
-              onSelect={filterBillsByDate}
+              onChange={(date) => {
+                setSelectedDate(date);
+                filterBillsByDate();
+              }}
               maxDate={new Date()}
             />
           </div>
@@ -247,7 +249,9 @@ export default function BillsPage() {
           <Table striped bordered hover>
             <thead className="text-center">
               <tr>
+                <th>Date Time</th>
                 <th>Invoice No.</th>
+                <th>Cashier Name</th>
                 {/* <th>Customer Name</th>
                 <th>Customer Number</th> */}
                 <th>Payment Mode</th>
@@ -275,7 +279,9 @@ export default function BillsPage() {
                   .slice(indexOfFirstItem, indexOfLastItem)
                   .map((bill, index) => (
                     <tr key={index}>
+                      <td>{formattedDate(bill.createdAt)}</td>
                       <td>{bill.invoiceNumber || ""}</td>
+                      <td>{bill.cashierName || ""}</td>
                       {bill.customerName && <td>{bill.customerName}</td>}
                       {bill.customerNumber && <td>{bill.customerNumber}</td>}
                       <td>{bill.paymentMode || ""}</td>
