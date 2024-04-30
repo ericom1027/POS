@@ -196,7 +196,7 @@ export default function BillsPage() {
 
     try {
       const response = await axios.post(
-        "https://pos-cbfa.onrender.com/void",
+        "https://pos-cbfa.onrender.com/bills/void",
         { invoiceNumber },
         {
           headers: {
@@ -206,6 +206,18 @@ export default function BillsPage() {
       );
 
       toast.success("Invoice voided successfully:", response.data);
+
+      // Remove the voided invoice from billsData and filteredBillsData
+      const updatedBillsData = billsData.filter(
+        (bill) => bill.invoiceNumber !== invoiceNumber
+      );
+      const updatedFilteredBillsData = filteredBillsData.filter(
+        (bill) => bill.invoiceNumber !== invoiceNumber
+      );
+
+      // Update the state with the updated arrays
+      setBillsData(updatedBillsData);
+      setFilteredBillsData(updatedFilteredBillsData);
 
       setPopupModal(false);
     } catch (error) {

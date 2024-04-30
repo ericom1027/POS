@@ -116,10 +116,10 @@ export default function App() {
           )}
 
           {/* Public routes */}
+          <Route path="*" element={<ErrorPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset/:token" element={<ResetPassword />} />
           <Route path="/login" element={<Login />} />
-          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>
     </UserProvider>

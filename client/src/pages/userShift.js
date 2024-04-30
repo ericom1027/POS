@@ -57,7 +57,7 @@ const ShiftPage = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success("Shift opened successfully!", toastOptions);
-      setNewShift({ firstName: user.firstName, startingCash: "" }); // Reset starting cash only
+      setNewShift({ firstName: user.firstName, startingCash: "" });
       // Redirect to home page after opening shift
       navigate("/home");
     } catch (error) {
