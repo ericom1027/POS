@@ -365,7 +365,7 @@ body{
   text-align: center;
 }
 
-/* Shift Report */
+/* --------Shift Report -------------*/
 .total-amount{
   display: none;
 }
@@ -373,6 +373,17 @@ body{
 .hidden {
   display: none;
 }
+
+/* -------INVOICE RECEIPT---- */
+.thermal-paper-content {
+  font-size: 12px; 
+  line-height: 1.2;
+}
+
+.thermal-paper-content p {
+  margin: 4px 0; 
+}
+
 
 
 @media screen and (max-width: 768px) {

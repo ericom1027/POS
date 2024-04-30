@@ -42,7 +42,7 @@ function BillModal({ bill, show, onHide, onVoid }) {
       </Modal.Header>
       <Modal.Body>
         {bill && (
-          <div className="mt-2" ref={componentRef}>
+          <div className="thermal-paper-content" ref={componentRef}>
             <div className="text-center mb-2">
               <h3>Kanto Siete Pares Mami</h3>
               <p>
@@ -51,7 +51,7 @@ function BillModal({ bill, show, onHide, onVoid }) {
               </p>
               {/* <p>Contact No. 12345678901 | Address: Manila, Philippines</p> */}
               {/* <p>VAT Reg TIN: 240-000-000-000-00000</p> */}
-              <h6 className="text-center">SALES RECEIPT</h6>
+              <h6 className="text-center">SALES INVOICE</h6>
               <hr />
             </div>
             <div className="text-left">
@@ -116,7 +116,7 @@ function BillModal({ bill, show, onHide, onVoid }) {
                 <p>{formattedDate(bill.createdAt)}</p>
                 <p>Thank you for your order!</p>
                 <p>
-                  This serves as your <b>SALES RECEIPT</b>
+                  'NOT VALID AS <b>OFFICIAL RECEIPT</b>
                 </p>
                 <p>EMD IT Solutions. | All rights reserved </p>
               </div>
@@ -177,7 +177,7 @@ export default function BillsPage() {
     };
 
     fetchData();
-  }, [dispatch, selectedDate]); // Include selectedDate in the dependency array
+  }, [dispatch, selectedDate]);
 
   const handleVoid = async () => {
     const token = localStorage.getItem("token");
@@ -245,7 +245,7 @@ export default function BillsPage() {
       <Sidenav />
       <div className="w-100 py-5 mt-5 mb-5 p-3">
         <h1>Invoice List</h1>
-        {user.isAdmin && ( // Render date picker only for admin users
+        {user.isAdmin && (
           <div className="mb-3">
             <DatePicker
               selected={selectedDate}
@@ -263,26 +263,22 @@ export default function BillsPage() {
               <tr>
                 <th>Date Time</th>
                 <th>Invoice No.</th>
-                <th>Cashier Name</th>
-                {/* <th>Customer Name</th>
-                <th>Customer Number</th> */}
-                <th>Payment Mode</th>
-                <th>Description</th>
-                <th>Sub Total</th>
-                <th>VATable Sales</th>
-                <th>VAT Amount</th>
-                <th>Tendered Cash</th>
-                <th>Change</th>
-                <th>Discount</th>
+                <th className={user.isAdmin ? "" : "hidden"}>Description</th>
+                <th className={user.isAdmin ? "" : "hidden"}>Sub Total</th>
+                <th className={user.isAdmin ? "" : "hidden"}>Cashier Name</th>
+                <th className={user.isAdmin ? "" : "hidden"}>Payment Mode</th>
+                <th className={user.isAdmin ? "" : "hidden"}>Tendered Cash</th>
+                <th className={user.isAdmin ? "" : "hidden"}>Change</th>
+                <th className={user.isAdmin ? "" : "hidden"}>Discount</th>
                 <th>Total Amount</th>
-                <th>Status</th>
+                <th className={user.isAdmin ? "" : "hidden"}>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {filteredBillsData.length === 0 ? (
                 <tr>
-                  <td colSpan="12" className="text-center">
+                  <td colSpan="10" className="text-center">
                     No invoices for the selected date.
                   </td>
                 </tr>
@@ -293,11 +289,7 @@ export default function BillsPage() {
                     <tr key={index}>
                       <td>{formattedDate(bill.createdAt)}</td>
                       <td>{bill.invoiceNumber || ""}</td>
-                      <td>{bill.cashierName || ""}</td>
-                      {bill.customerName && <td>{bill.customerName}</td>}
-                      {bill.customerNumber && <td>{bill.customerNumber}</td>}
-                      <td>{bill.paymentMode || ""}</td>
-                      <td>
+                      <td className={user.isAdmin ? "" : "hidden"}>
                         {bill.cartItems &&
                           bill.cartItems.map((item, idx) => (
                             <div key={idx}>
@@ -306,26 +298,30 @@ export default function BillsPage() {
                             </div>
                           ))}
                       </td>
-                      <td>{bill.subTotal ? bill.subTotal.toFixed(2) : ""}</td>
-                      <td>
-                        {bill.vatSales !== undefined
-                          ? bill.vatSales.toFixed(2)
-                          : ""}
+                      <td className={user.isAdmin ? "" : "hidden"}>
+                        {bill.subTotal ? bill.subTotal.toFixed(2) : ""}
                       </td>
-                      <td>
-                        {bill.vatAmount !== undefined
-                          ? bill.vatAmount.toFixed(2)
-                          : ""}
+                      <td className={user.isAdmin ? "" : "hidden"}>
+                        {bill.cashierName || ""}
                       </td>
-                      <td>{bill.cash ? bill.cash.toFixed(2) : ""}</td>
-                      <td>{bill.change ? bill.change.toFixed(2) : ""}</td>
-                      <td>
+                      <td className={user.isAdmin ? "" : "hidden"}>
+                        {bill.paymentMode || ""}
+                      </td>
+                      <td className={user.isAdmin ? "" : "hidden"}>
+                        {bill.cash ? bill.cash.toFixed(2) : ""}
+                      </td>
+                      <td className={user.isAdmin ? "" : "hidden"}>
+                        {bill.change ? bill.change.toFixed(2) : ""}
+                      </td>
+                      <td className={user.isAdmin ? "" : "hidden"}>
                         {bill.discount ? bill.discount.toFixed(2) : "0.00"}
                       </td>
                       <td>
                         {bill.totalAmount ? bill.totalAmount.toFixed(2) : ""}
                       </td>
-                      <td>{bill.voided ? "voided" : ""}</td>
+                      <td className={user.isAdmin ? "" : "hidden"}>
+                        {bill.voided ? "voided" : ""}
+                      </td>
                       <td>
                         <div className="icons">
                           <PrintIcon
