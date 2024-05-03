@@ -53,9 +53,9 @@ const ShiftPage = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <Sidenav />
-      <div className="w-100 py-5 mt-5 mb-5 p-3">
+      <div className="w-100 py-5 mt-5 p-5">
         <Button
-          className="d-flex mt-2 ms-auto"
+          className="d-flex ms-auto"
           variant="primary"
           onClick={handlePrint}
         >
