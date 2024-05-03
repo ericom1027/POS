@@ -32,8 +32,13 @@ exports.openShift = async (req, res) => {
 
 exports.closeShift = async (req, res) => {
   try {
-    const { firstName, startingCash, endingCash, expectedCashAmount } =
-      req.body;
+    const {
+      firstName,
+      startingCash,
+      endingCash,
+      expectedCashAmount,
+      difference,
+    } = req.body;
 
     const user = await User.findOne({ firstName });
 
@@ -48,6 +53,7 @@ exports.closeShift = async (req, res) => {
         endingCash,
         startingCash,
         expectedCashAmount,
+        difference,
       },
       { new: true }
     );
@@ -65,7 +71,7 @@ exports.closeShift = async (req, res) => {
   }
 };
 
-// Controller for fetching shifts
+// ==========Controller for fetching shifts==================
 
 exports.getShifts = async (req, res) => {
   try {
@@ -114,27 +120,50 @@ exports.getShifts = async (req, res) => {
 exports.getDailySalesByCashier = async (req, res) => {
   try {
     const currentDate = new Date();
-    const startOfDay = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate(),
-      0,
-      0,
-      0
-    );
+    let startOfDay, endOfDay;
 
-    const endOfDay = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate(),
-      23,
-      59,
-      59
-    );
+    // Pag-filter para sa morning shift (4:00 AM - 4:00 PM)
+    if (currentDate.getHours() >= 4 && currentDate.getHours() < 16) {
+      startOfDay = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate(),
+        4, // 4:00 AM
+        0,
+        0
+      );
+      endOfDay = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate(),
+        16, // 4:00 PM
+        0,
+        0
+      );
+    } else {
+      startOfDay = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate(),
+        16, // 4:00 PM
+        0,
+        0
+      );
+      // Kung night shift, kailangang idagdag ang isang araw sa petsa para sa endOfDay
+      endOfDay = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate() + 1, // idagdag ang isang araw
+        4, // 4:00 AM kinabukasan
+        0,
+        0
+      );
+    }
+
     const dailySales = await Bills.aggregate([
       {
         $match: {
-          createdAt: { $gte: startOfDay, $lte: endOfDay },
+          createdAt: { $gte: startOfDay, $lt: endOfDay },
         },
       },
       {
@@ -155,8 +184,6 @@ exports.getDailySalesByCashier = async (req, res) => {
         },
       },
     ]);
-
-    // console.log("Daily Sales by Cashier:", dailySales);
 
     res.status(200).json(dailySales);
   } catch (error) {
