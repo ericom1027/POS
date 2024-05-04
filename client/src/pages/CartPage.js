@@ -182,7 +182,7 @@ export default function CartPage() {
       <Sidenav />
       <div className="w-100 py-5 mt-5 mb-5 p-3">
         <h1>Cart Order List</h1>
-        <Table striped bordered hover>
+        <Table className="table-reponsive" striped bordered hover>
           <thead>
             <tr>
               {columns.map((column, index) => (

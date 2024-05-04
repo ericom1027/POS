@@ -257,8 +257,8 @@ export default function BillsPage() {
             />
           </div>
         )}
-        <div className="table-responsive">
-          <Table striped bordered hover>
+        <div>
+          <Table className="table-reponsive" striped bordered hover>
             <thead className="text-center">
               <tr>
                 <th>Date Time</th>

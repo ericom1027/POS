@@ -135,7 +135,7 @@ const ItemPage = () => {
             Add Item
           </Button>
         </div>
-        <Table striped bordered hover>
+        <Table className="table-reponsive" striped bordered hover>
           <thead>
             <tr>
               <th>Item Name</th>

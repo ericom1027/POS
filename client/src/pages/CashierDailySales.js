@@ -94,7 +94,7 @@ const DailySalesTable = () => {
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
           />
-          <Table striped bordered hover>
+          <Table className="table-reponsive" striped bordered hover>
             <thead>
               <tr>
                 <th>Date</th>

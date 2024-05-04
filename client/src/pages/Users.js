@@ -174,7 +174,7 @@ const Users = () => {
           </Button>
         </div>
         <div>
-          <Table striped bordered hover>
+          <Table className="table-reponsive" striped bordered hover>
             <thead>
               <tr>
                 <th>First Name</th>

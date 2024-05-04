@@ -457,7 +457,30 @@ body{
   height: auto; 
 }
 
+.img-logo {
+  margin-left: 20px; 
+  margin-top: 20px; 
+ 
+}
 
+@media (max-width: 570px) and (orientation: portrait) {
+  .img-logo {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 80px;
+    height: auto;
+    animation: blink 1s infinite;
+  }
+
+  .col-logo {
+    position: fixed;
+    bottom: 10px;
+    right: 10px; 
+    text-align: right;
+    
+  }
+}
 
 @media screen and (max-width: 480px) {
   .login-form {
